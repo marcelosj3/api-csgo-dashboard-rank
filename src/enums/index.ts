@@ -1,1 +1,2 @@
-export { Platform } from "./platform.enum";
+export { PlatformNames } from "./platform.enum";
+export { Teams } from "./teams.enum";

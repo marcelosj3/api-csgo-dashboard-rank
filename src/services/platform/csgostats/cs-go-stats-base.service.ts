@@ -1,11 +1,11 @@
 import { Page } from "playwright";
 import { CheerioAPI, load } from "cheerio";
 
-import { Platform } from "../../../enums";
+import { PlatformNames } from "../../../enums";
 import { IMatchDetails, IPlayerInfo } from "../../../interfaces/";
 
 export class CSGOStatsBase {
-  platform: Platform = Platform.CSGOSTATS;
+  platform: PlatformNames = PlatformNames.CSGOSTATS;
   match: IMatchDetails;
   team_1: IPlayerInfo[];
   team_2: IPlayerInfo[];
