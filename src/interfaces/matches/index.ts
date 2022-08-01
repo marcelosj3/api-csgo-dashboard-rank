@@ -1,1 +1,1 @@
-export { IMatchInfo } from "./match-info.interface";
+export { IMatchDetails } from "./match-details.interface";

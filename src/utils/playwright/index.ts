@@ -1,1 +1,3 @@
-export { pageLaunch } from "./page-launch.util";
+import Playwright from "./playwright.util";
+
+export { Playwright };
