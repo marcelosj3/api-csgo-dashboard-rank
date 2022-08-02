@@ -2,7 +2,7 @@ import playwright, { Page, Browser, LaunchOptions } from "playwright";
 
 class Playwright {
   private launchOptions: LaunchOptions = {
-    headless: false,
+    headless: true,
   };
   private browser: Browser;
   public page: Page;

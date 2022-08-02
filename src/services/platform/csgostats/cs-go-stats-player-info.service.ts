@@ -10,7 +10,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
     return url.split("/").slice(-1)[0];
   };
 
-  playerDetails = async (page: Page, url: string): Promise<IPlayer> => {
+  playerDetails = async (url: string): Promise<IPlayer> => {
     const details = this.$(".player-ident-outer");
 
     const name = details.find("#player-name").text();
