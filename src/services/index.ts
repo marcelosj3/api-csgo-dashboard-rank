@@ -1,3 +1,3 @@
-import MatchesService from "./matches.service";
+import MatchServices from "./match.service";
 
-export { MatchesService };
+export { MatchServices };

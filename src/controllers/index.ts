@@ -1,3 +1,3 @@
-import MatchesController from "./matches.controller";
+import MatchController from "./matches.controller";
 
-export { MatchesController };
+export { MatchController };

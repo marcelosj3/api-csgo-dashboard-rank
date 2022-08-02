@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { MatchesService } from "../services";
+import { MatchServices } from "../services";
 
-class MatchesController {
+class MatchController {
   insertMatch = async (req: Request, res: Response) => {
-    const { status, message } = await MatchesService.insertMatch(req);
+    const { status, message } = await MatchServices.insertMatch(req);
     return res.status(status).json(message);
   };
 }
 
-export default new MatchesController();
+export default new MatchController();

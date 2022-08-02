@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { Teams } from "../enums";
 
@@ -10,14 +10,14 @@ export class Scoreboard {
   readonly scoreboardId?: string;
 
   @Column({ type: "int", nullable: false })
-  team1Rounds: string;
+  team1Rounds: number;
 
   @Column({ type: "int", nullable: false })
-  team2Rounds: string;
+  team2Rounds: number;
 
   @Column({ nullable: false })
   winner: Teams;
 
-  @ManyToOne(() => Match, (match) => match.scoreboard)
+  @OneToMany(() => Match, (match) => match.scoreboard, { eager: true })
   matches: Match[];
 }

@@ -1,3 +1,4 @@
+import { Teams } from "../../../enums";
 import { IMatchDetails, IPlayerInfo } from "../../../interfaces";
 
 import { CSGOStatsPlayerInfo } from "./cs-go-stats-player-info.service";
@@ -19,10 +20,12 @@ export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
     const platform_id = this.matchId(url);
 
     return {
-      date: matchDate,
       platform: this.platform,
-      platform_id,
+      date: matchDate,
+      platformMatchId: platform_id,
       mapName,
+      matchUrl: "123",
+      scoreboard: { team1Rounds: 1, team2Rounds: 3, winner: Teams.TEAM_1 },
     };
   };
 
