@@ -2,6 +2,8 @@ import { Request } from "express";
 import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Match, Platform, Scoreboard } from "../entities";
+import { PlatformCredentials } from "../entities/platform-credentials";
+import { Player } from "../entities/player.entity";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
 
@@ -29,12 +31,10 @@ class MatchesService {
     scoreboardInfo: IScoreboard,
     entityManager: EntityManager
   ) => {
-    let scoreboard = await entityManager.findOneBy(Scoreboard, {
-      ...scoreboardInfo,
-    });
+    let scoreboard = await entityManager.findOneBy(Scoreboard, scoreboardInfo);
 
     if (!scoreboard) {
-      scoreboard = await entityManager.save(Scoreboard, { ...scoreboardInfo });
+      scoreboard = await entityManager.save(Scoreboard, scoreboardInfo);
     }
 
     return scoreboard;
@@ -58,6 +58,31 @@ class MatchesService {
         entityManager
       );
 
+      const players = Promise.all(
+        [...matchInfo.team_1, ...matchInfo.team_2].map(
+          async (playerDetails) => {
+            const playerInfo = {
+              ...playerDetails.playerInfo,
+              platformId: undefined,
+            };
+
+            const platformCredentials = await entityManager.save(
+              PlatformCredentials,
+              {
+                platformNames: [platform],
+                platformPlayerId: playerDetails.playerInfo.platformPlayerId,
+              }
+            );
+
+            const player = entityManager.create(Player, playerInfo);
+
+            player.platformCredentials = [platformCredentials];
+
+            return await entityManager.save(Player, player);
+          }
+        )
+      );
+
       const matchStatsInfo = {
         ...matchInfo.match,
         platform: undefined,
@@ -68,6 +93,7 @@ class MatchesService {
 
       match.platform = platform;
       match.scoreboard = scoreboard;
+      match.players = await players;
 
       return await entityManager.save(Match, match);
     });

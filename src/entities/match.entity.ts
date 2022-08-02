@@ -1,6 +1,14 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 
 import { Platform } from "./platform.entity";
+import { Player } from "./player.entity";
 import { Scoreboard } from "./scoreboard.entity";
 
 @Entity("matches")
@@ -29,4 +37,8 @@ export class Match {
     onDelete: "SET NULL",
   })
   platform: Platform;
+
+  @ManyToMany(() => Player, (player) => player.matches)
+  @JoinTable()
+  players: Player[];
 }

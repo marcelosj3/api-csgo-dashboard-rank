@@ -1,8 +1,8 @@
 import { IMatchDetails, IPlayerInfo } from "../../../interfaces";
 
-import { CSGOStatsPlayerInfo } from "./cs-go-stats-player-info.service";
+import { CSGOStatsMatchPlayerInfo } from "./cs-go-stats-match-player-info.service";
 
-export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
+export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
   matchId = (url: string): string => {
     return url.split("/").slice(-1)[0];
   };

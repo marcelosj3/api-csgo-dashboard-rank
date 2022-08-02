@@ -1,5 +1,5 @@
 export interface IPlayerMatchInfo {
   name: string;
   imageUrl: string;
-  csgostatsId: string;
+  platformPlayerId: string;
 }

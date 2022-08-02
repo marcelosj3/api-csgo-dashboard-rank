@@ -12,6 +12,8 @@ class ScoreboardRepository {
 
   create = (Scoreboard: Scoreboard) => this.repo.create(Scoreboard);
 
+  find = () => this.repo.find({ relations: ["matches"] });
+
   save = async (Scoreboard: Scoreboard) => await this.repo.save(Scoreboard);
 }
 

@@ -6,7 +6,7 @@ import { IPlayerMatchInfo } from "../../../interfaces/players/player-match-info.
 
 import { CSGOStatsBase } from "./cs-go-stats-base.service";
 
-export class CSGOStatsPlayerInfo extends CSGOStatsBase {
+export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
   PLAYER_INFO_INDEX = 0;
   KILLS_INFO_INDEX = 2;
   DEATHS_INFO_INDEX = 3;
@@ -28,10 +28,10 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
   MULTIKILL_2K_INDEX = 40;
   MULTIKILL_1K_INDEX = 41;
 
-  normalizeArray = <T>(array: Partial<T | undefined>[]) => {
+  normalizeArray = <T>(array: Partial<T | undefined>[]): T => {
     return array
       .filter((element) => element)
-      .reduce((acc, value) => Object.assign(acc!, value), {})!;
+      .reduce((acc, value) => Object.assign(acc!, value), {})! as T;
   };
 
   playerStatsArray = (playerElement: Cheerio<Element>) => {
@@ -62,7 +62,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
 
     const playerMatchStats = this.normalizeArray<IMultikill>(playerStatsArray);
 
-    return playerMatchStats as IMultikill;
+    return playerMatchStats;
   };
   playerMatchStats = async (
     playerElement: Cheerio<Element>
@@ -104,14 +104,14 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
       }
     );
 
-    const playerMatchStats =
+    const playerMatchStats: IPlayerMatchStats =
       this.normalizeArray<IPlayerMatchStats>(playerStatsArray);
 
     Object.assign(playerMatchStats, {
       multikill: await this.playerMultikillStats(playerElement),
     });
 
-    return playerMatchStats as IPlayerMatchStats;
+    return playerMatchStats;
   };
 
   playerInfoStats = async (
@@ -131,7 +131,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
     const playerInfoStats =
       this.normalizeArray<IPlayerMatchInfo>(playerStatsArray);
 
-    return playerInfoStats as IPlayerMatchInfo;
+    return playerInfoStats;
   };
 
   playerStats = async (
@@ -148,9 +148,13 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
   playerInfo = (stats: Cheerio<Element>): Partial<IPlayerMatchInfo> => {
     const imageUrl = stats.find("img").attr("src");
     const name = stats.find("a > span").text();
-    const csgostatsId = stats.find("a").attr("href")?.split("/").slice(-1)[0];
+    const platformPlayerId = stats
+      .find("a")
+      .attr("href")
+      ?.split("/")
+      .slice(-1)[0];
 
-    return { imageUrl, name, csgostatsId };
+    return { imageUrl, name, platformPlayerId };
   };
 
   killsInfo = (stats: Cheerio<Element>): Partial<IPlayerMatchStats> => {
