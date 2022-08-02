@@ -12,7 +12,7 @@ class MatchRepository {
 
   create = (match: Match) => this.repo.create(match);
 
-  find = () => this.repo.find({ relations: ["platform", "scoreboard"] });
+  findAll = () => this.repo.find({ relations: ["platform", "scoreboard"] });
 
   save = async (match: Match) => await this.repo.save(match);
 }

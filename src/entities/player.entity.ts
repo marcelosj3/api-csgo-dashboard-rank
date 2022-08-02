@@ -3,10 +3,11 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Match } from "./match.entity";
 import { PlatformCredentials } from "./platform-credentials";
+import { PlayerMatch } from "./player-match.entity";
 
 @Entity("players")
 export class Player {
@@ -16,7 +17,7 @@ export class Player {
   @Column()
   name: string;
 
-  @Column({ nullable: true })
+  @Column()
   imageUrl: string;
 
   @ManyToMany(
@@ -27,6 +28,9 @@ export class Player {
   @JoinTable()
   platformCredentials: PlatformCredentials[];
 
-  @ManyToMany(() => Match, (match) => match.players)
-  matches: Match[];
+  @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.player, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
+  playerMatches: PlayerMatch[];
 }

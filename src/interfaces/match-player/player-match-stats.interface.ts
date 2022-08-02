@@ -1,5 +1,4 @@
-import { Teams } from "../../../enums";
-
+import { Teams } from "../../enums";
 import { IMultikill } from "./multikill.interface";
 
 export interface IPlayerMatchStats {

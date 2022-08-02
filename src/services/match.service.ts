@@ -2,15 +2,18 @@ import { Request } from "express";
 import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Match, Platform, Scoreboard } from "../entities";
+import { Multikill } from "../entities/multikill.entity";
 import { PlatformCredentials } from "../entities/platform-credentials";
+import { PlayerMatch } from "../entities/player-match.entity";
 import { Player } from "../entities/player.entity";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
+import { PlayerRepository } from "../repositories";
 
 import { Playwright } from "../utils/playwright";
 import { CSGOStats } from "./platform";
 
-class MatchesService {
+class MatchService {
   private playwright = Playwright;
   private platformService = CSGOStats;
 
@@ -58,42 +61,50 @@ class MatchesService {
         entityManager
       );
 
-      const players = Promise.all(
-        [...matchInfo.team_1, ...matchInfo.team_2].map(
-          async (playerDetails) => {
-            const playerInfo = {
-              ...playerDetails.playerInfo,
-              platformId: undefined,
-            };
-
-            const platformCredentials = await entityManager.save(
-              PlatformCredentials,
-              {
-                platformNames: [platform],
-                platformPlayerId: playerDetails.playerInfo.platformPlayerId,
-              }
-            );
-
-            const player = entityManager.create(Player, playerInfo);
-
-            player.platformCredentials = [platformCredentials];
-
-            return await entityManager.save(Player, player);
-          }
-        )
-      );
-
       const matchStatsInfo = {
         ...matchInfo.match,
         platform: undefined,
         scoreboard: undefined,
+        playerMatches: [],
       };
+
+      const players = [...matchInfo.team_1, ...matchInfo.team_2];
+
+      const playerMatchesArray = Promise.all(
+        // TODO change these teams to one player array
+        players.map(async (playerDetails) => {
+          const player = await PlayerRepository.findOne(
+            playerDetails.playerInfo.platformPlayerId
+          );
+
+          if (!player) return undefined;
+
+          const multikill = await entityManager.save(
+            Multikill,
+            playerDetails.matchStats.multikill
+          );
+
+          const playerMatches = entityManager.create(PlayerMatch, {
+            ...playerDetails.matchStats,
+            multikill: undefined,
+          });
+
+          playerMatches.multikill = multikill;
+          playerMatches.player = player;
+
+          return await entityManager.save(PlayerMatch, playerMatches);
+        })
+      );
+
+      const playerMatches = (await playerMatchesArray).filter(
+        (player) => player
+      ) as PlayerMatch[];
 
       const match = entityManager.create(Match, matchStatsInfo);
 
       match.platform = platform;
       match.scoreboard = scoreboard;
-      match.players = await players;
+      match.playerMatches = playerMatches;
 
       return await entityManager.save(Match, match);
     });
@@ -104,4 +115,4 @@ class MatchesService {
   };
 }
 
-export default new MatchesService();
+export default new MatchService();

@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 
 import { Platform } from "./platform.entity";
-import { Player } from "./player.entity";
+import { PlayerMatch } from "./player-match.entity";
 import { Scoreboard } from "./scoreboard.entity";
 
 @Entity("matches")
@@ -38,7 +38,10 @@ export class Match {
   })
   platform: Platform;
 
-  @ManyToMany(() => Player, (player) => player.matches)
+  @ManyToMany(() => PlayerMatch, (playerMatch) => playerMatch.matches, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   @JoinTable()
-  players: Player[];
+  playerMatches: PlayerMatch[];
 }
