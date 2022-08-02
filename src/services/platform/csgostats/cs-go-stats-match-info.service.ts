@@ -1,4 +1,3 @@
-import { Teams } from "../../../enums";
 import { IMatchDetails, IPlayerInfo } from "../../../interfaces";
 
 import { CSGOStatsPlayerInfo } from "./cs-go-stats-player-info.service";

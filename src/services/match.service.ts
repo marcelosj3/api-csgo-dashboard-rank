@@ -4,7 +4,6 @@ import { AppDataSource } from "../data-source";
 import { Match, Platform, Scoreboard } from "../entities";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
-import { MatchRepository } from "../repositories";
 
 import { Playwright } from "../utils/playwright";
 import { CSGOStats } from "./platform";
@@ -74,12 +73,6 @@ class MatchesService {
     });
 
     await this.playwright.close();
-
-    const matchstats = await MatchRepository.find();
-
-    console.log();
-    console.log(matchstats);
-    console.log();
 
     return { status: 200, message: match };
   };

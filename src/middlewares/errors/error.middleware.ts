@@ -3,9 +3,9 @@ import { AppError } from "../../errors/app.error";
 
 export const errorMiddleware = (
   err: any,
-  request: Request,
+  _: Request,
   response: Response,
-  _: NextFunction
+  __: NextFunction
 ) => {
   if (err instanceof AppError) {
     return response.status(err.statusCode).json({

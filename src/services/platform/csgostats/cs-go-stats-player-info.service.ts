@@ -28,8 +28,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
   MULTIKILL_2K_INDEX = 40;
   MULTIKILL_1K_INDEX = 41;
 
-  // TODO type this any
-  normalizeArray = (array: any[]) => {
+  normalizeArray = <T>(array: Partial<T | undefined>[]) => {
     return array
       .filter((element) => element)
       .reduce((acc, value) => Object.assign(acc!, value), {})!;
@@ -61,7 +60,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
       }
     );
 
-    const playerMatchStats = this.normalizeArray(playerStatsArray);
+    const playerMatchStats = this.normalizeArray<IMultikill>(playerStatsArray);
 
     return playerMatchStats as IMultikill;
   };
@@ -105,7 +104,8 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
       }
     );
 
-    const playerMatchStats = this.normalizeArray(playerStatsArray);
+    const playerMatchStats =
+      this.normalizeArray<IPlayerMatchStats>(playerStatsArray);
 
     Object.assign(playerMatchStats, {
       multikill: await this.playerMultikillStats(playerElement),
@@ -128,7 +128,8 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
       }
     );
 
-    const playerInfoStats = this.normalizeArray(playerStatsArray);
+    const playerInfoStats =
+      this.normalizeArray<IPlayerMatchInfo>(playerStatsArray);
 
     return playerInfoStats as IPlayerMatchInfo;
   };
