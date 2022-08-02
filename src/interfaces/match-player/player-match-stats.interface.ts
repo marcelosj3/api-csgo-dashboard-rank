@@ -1,8 +1,8 @@
+import { Teams } from "../../enums";
 import { IMultikill } from "./multikill.interface";
 
 export interface IPlayerMatchStats {
-  // TODO change team for a enum
-  team: string;
+  team: Teams;
   kills: number;
   deaths: number;
   assists: number;

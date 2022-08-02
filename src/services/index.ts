@@ -1,3 +1,4 @@
-import MatchesService from "./matches.service";
+import MatchServices from "./match.service";
+import PlayerService from "./player.service";
 
-export { MatchesService };
+export { MatchServices, PlayerService };

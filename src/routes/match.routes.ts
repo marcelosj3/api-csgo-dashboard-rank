@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { MatchesController } from "../controllers";
+import { MatchController } from "../controllers";
 
 const router: Router = Router();
 
 export const matchRoutes = (): Router => {
-  router.post("", MatchesController.insertMatch);
+  router.post("", MatchController.insertMatch);
 
   return router;
 };

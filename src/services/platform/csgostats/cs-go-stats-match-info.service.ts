@@ -1,8 +1,8 @@
-import { IMatchDetails, IPlayerInfo } from "../../../interfaces";
+import { IMatchDetails, IPlayerAndMatchStatsInfo } from "../../../interfaces";
 
-import { CSGOStatsPlayerInfo } from "./cs-go-stats-player-info.service";
+import { CSGOStatsMatchPlayerInfo } from "./cs-go-stats-match-player-info.service";
 
-export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
+export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
   matchId = (url: string): string => {
     return url.split("/").slice(-1)[0];
   };
@@ -17,16 +17,27 @@ export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
     const mapName = details.find(MAP_NAME_PATH).text();
     const matchDate = this.dateHandler(details.find(DATE_PATH).text());
     const platform_id = this.matchId(url);
+    const team1Rounds = Number(
+      details.find(".team-0-score > div > span").text()
+    );
+    const team2Rounds = Number(
+      details.find(".team-1-score > div > span").text()
+    );
 
     return {
-      date: matchDate,
       platform: this.platform,
-      platform_id,
+      date: matchDate,
+      platformMatchId: platform_id,
       mapName,
+      matchUrl: url,
+      scoreboard: {
+        team1Rounds,
+        team2Rounds,
+      },
     };
   };
 
-  teamDetails = async (): Promise<IPlayerInfo[][]> => {
+  teamDetails = async (): Promise<IPlayerAndMatchStatsInfo[][]> => {
     const TEAMS_INDEXES = [0, 2];
     const TEAM_STAT_INDEX = 0;
 
@@ -38,14 +49,16 @@ export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
       .filter((_, index) => TEAMS_INDEXES.includes(index))
       .map((element) => this.$(element));
 
-    const teamStats: IPlayerInfo[][] = [];
-    for (const team of teams) {
+    const teamStats: IPlayerAndMatchStatsInfo[][] = [];
+    for (let i = 0; i < teams.length; i++) {
+      const team = teams[i];
+
       const players = team
         .find("tr")
         .toArray()
         .map((player) => this.$(player));
 
-      const playerStat: IPlayerInfo[] = [];
+      const matchPlayer: IPlayerAndMatchStatsInfo[] = [];
 
       for (const player of players) {
         const playerIndex = players.indexOf(player);
@@ -54,11 +67,11 @@ export class CSGOStatsMatchInfo extends CSGOStatsPlayerInfo {
           case TEAM_STAT_INDEX:
             break;
           default:
-            playerStat.push(await this.playerStats(player));
+            matchPlayer.push(await this.matchPlayer(player, i + 1));
         }
       }
 
-      teamStats.push(playerStat);
+      teamStats.push(matchPlayer);
     }
 
     return teamStats;

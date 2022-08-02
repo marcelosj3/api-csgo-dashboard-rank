@@ -1,14 +1,15 @@
 import { Page } from "playwright";
 import { CheerioAPI, load } from "cheerio";
 
-import { Platform } from "../../../enums";
-import { IMatchDetails, IPlayerInfo } from "../../../interfaces/";
+import { PlatformNames } from "../../../enums";
+import { IMatchDetails, IPlayerMatchInfo } from "../../../interfaces/";
 
 export class CSGOStatsBase {
-  platform: Platform = Platform.CSGOSTATS;
+  platform: PlatformNames = PlatformNames.CSGOSTATS;
   match: IMatchDetails;
-  team_1: IPlayerInfo[];
-  team_2: IPlayerInfo[];
+  // TODO change theses teams to an only players array
+  team_1: IPlayerMatchInfo[];
+  team_2: IPlayerMatchInfo[];
   $: CheerioAPI;
 
   content = async (page: Page) => {
@@ -33,5 +34,11 @@ export class CSGOStatsBase {
     );
 
     return matchDate;
+  };
+
+  normalizeArrayToObject = <T>(array: Partial<T | undefined>[]): T => {
+    return array
+      .filter((element) => element)
+      .reduce((acc, value) => Object.assign(acc!, value), {})! as T;
   };
 }

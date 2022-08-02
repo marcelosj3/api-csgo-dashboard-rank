@@ -1,8 +1,11 @@
-import { Platform } from "../../enums";
+import { PlatformNames } from "../../enums";
+import { IScoreboard } from "./scoreboard.interface";
 
 export interface IMatchDetails {
-  platform: Platform;
-  platform_id: string;
+  platform: PlatformNames;
+  platformMatchId: string;
   date: Date;
   mapName: string;
+  matchUrl: string;
+  scoreboard: IScoreboard;
 }

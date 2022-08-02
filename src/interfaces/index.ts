@@ -1,4 +1,8 @@
-export { IMatchPlayerInfo } from "./match-player";
-export { IMatchDetails } from "./matches";
-export { IPlayerMatchStats } from "./players";
-export { IPlayerInfo } from "./players";
+export {
+  IMultikill,
+  IPlayerAndMatchStatsInfo,
+  IPlayerMatchInfo,
+  IPlayerMatchStats,
+} from "./match-player";
+export { IMatchDetails, IMatchPlayerInfo, IScoreboard } from "./matches";
+export { IPlayer } from "./players";

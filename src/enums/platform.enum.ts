@@ -1,3 +1,3 @@
-export enum Platform {
+export enum PlatformNames {
   CSGOSTATS = "CSGOSTATS",
 }
