@@ -167,12 +167,6 @@ export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
       team: this.matchGetTeam(teamIndex),
     });
 
-    console.log("~".repeat(50));
-    console.log();
-    console.log(playerMatchStats);
-    console.log();
-    console.log("~".repeat(50));
-
     return playerMatchStats;
   };
 

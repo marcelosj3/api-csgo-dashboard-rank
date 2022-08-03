@@ -1,8 +1,8 @@
-import { Page } from "playwright";
 import { CheerioAPI, load } from "cheerio";
 
 import { PlatformNames } from "../../../enums";
 import { IMatchDetails, IPlayerMatchInfo } from "../../../interfaces/";
+import { Page } from "../../../utils/puppeteer";
 
 export class CSGOStatsBase {
   platform: PlatformNames = PlatformNames.CSGOSTATS;

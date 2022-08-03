@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { Page } from "../../../utils/puppeteer/index";
 import { IMatchPlayerInfo, IPlayer } from "../../../interfaces";
 
 import { CSGOStatsBase } from "./cs-go-stats-base.service";
@@ -19,7 +19,7 @@ class CSGOStats extends CSGOStatsBase {
 
   playerInfo = async (page: Page, url: string): Promise<IPlayer> => {
     this.$ = await this.playerInfoClass.content(page);
-    const playerInfo = await this.playerInfoClass.playerDetails(page, url);
+    const playerInfo = await this.playerInfoClass.playerDetails(url);
 
     return playerInfo;
   };
