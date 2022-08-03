@@ -21,6 +21,10 @@ RUN yarn
 
 COPY . .
 
+RUN npm install
+
+COPY . . 
+
 USER root
 
 CMD ["yarn", "start"]
