@@ -13,12 +13,14 @@ services:
     ports:
       - 3000:3000
     depends_on:
-      - database
+      - csgodatabase
     command: bash -c 'yarn migration:run && yarn dev'
-  database:
-    container_name: database
+  csgodatabase:
+    container_name: csgodatabase
     image: postgres
     env_file:
       - .env
+    expose:
+      - 5432
     ports:
       - 5432:5432
