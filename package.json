@@ -8,7 +8,9 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "typeorm-ts-node-commonjs migration:create",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/data-source.ts",
-    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts"
+    "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
@@ -20,6 +22,7 @@
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.0",
     "reflect-metadata": "^0.1.13",
+    "ts-node": "^10.9.1",
     "typeorm": "^0.3.7"
   },
   "devDependencies": {

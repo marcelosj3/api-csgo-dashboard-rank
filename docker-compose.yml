@@ -1,20 +1,6 @@
-version: '3.3'
+version: '3.7'
 
 services:
-  csgodashboardrank:
-    container_name: csgodashboardrank
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./src:/app/src
-    expose:
-      - 3000
-    ports:
-      - 3000:3000
-    depends_on:
-      - csgodatabase
-    command: bash -c 'yarn migration:run && yarn dev'
   csgodatabase:
     container_name: csgodatabase
     image: postgres
@@ -24,3 +10,31 @@ services:
       - 5432
     ports:
       - 5432:5432
+
+  migration:
+    build: .
+    env_file: .env
+    command:
+        bash -c 'while !</dev/tcp/csgodatabase/5432; do sleep 1; done; yarn migration:run'
+    volumes:
+        - ./src:/app/src
+    depends_on:
+        - csgodatabase
+
+  csgodashboardrank:
+    container_name: csgodashboardrank
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+        bash -c 'while !</dev/tcp/csgodatabase/5432; do sleep 1; done; yarn; yarn migration:run; yarn dev'
+    env_file: .env
+    volumes:
+      - ./src:/app/src
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    depends_on:
+      - csgodatabase
+      - migration
