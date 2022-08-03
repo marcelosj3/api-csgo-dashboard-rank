@@ -2,4 +2,4 @@ build:
   docker:
     web: Dockerfile
 run:
-  web: yarn && yarn migration:run && yarn dev
+  web: yarn migration:run && yarn dev

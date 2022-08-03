@@ -27,7 +27,7 @@ services:
       context: .
       dockerfile: Dockerfile
     command:
-        bash -c 'while !</dev/tcp/csgodatabase/5432; do sleep 1; done; yarn migration:run; yarn dev'
+        bash -c 'while !</dev/tcp/csgodatabase/5432; do sleep 1; done; yarn; yarn migration:run; yarn dev'
     env_file: .env
     volumes:
       - ./src:/app/src
