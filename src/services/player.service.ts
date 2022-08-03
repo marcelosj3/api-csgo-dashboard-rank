@@ -7,11 +7,11 @@ import { Player } from "../entities/player.entity";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
 
-import { Playwright } from "../utils/playwright";
+import { Puppeteer } from "../utils/puppeteer";
 import { CSGOStats } from "./platform";
 
 class PlayerService {
-  private playwright = Playwright;
+  private puppeteer = Puppeteer;
   private platformService = CSGOStats;
 
   getOrCreatePlatform = async (
@@ -30,7 +30,7 @@ class PlayerService {
   insertPlayer = async ({ body }: Request) => {
     const { url } = body;
 
-    const page = await this.playwright.launchPage(url);
+    const page = await this.puppeteer.launchPage(url);
 
     const playerInfo = await this.platformService.playerInfo(page, url);
 
@@ -61,7 +61,7 @@ class PlayerService {
       return await entityManager.save(Player, player);
     });
 
-    await this.playwright.close();
+    await this.puppeteer.close();
 
     return { status: 200, message: player };
   };

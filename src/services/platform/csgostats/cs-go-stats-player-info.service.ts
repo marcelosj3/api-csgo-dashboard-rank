@@ -1,5 +1,3 @@
-import { Cheerio, Element } from "cheerio";
-import { Page } from "playwright";
 import { PlatformNames } from "../../../enums";
 import { IPlayer } from "../../../interfaces";
 

@@ -3,18 +3,16 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Match, Platform, Scoreboard } from "../entities";
 import { Multikill } from "../entities/multikill.entity";
-import { PlatformCredentials } from "../entities/platform-credentials";
 import { PlayerMatch } from "../entities/player-match.entity";
-import { Player } from "../entities/player.entity";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
 import { PlayerRepository } from "../repositories";
 
-import { Playwright } from "../utils/playwright";
+import { Puppeteer } from "../utils/puppeteer";
 import { CSGOStats } from "./platform";
 
 class MatchService {
-  private playwright = Playwright;
+  private puppeteer = Puppeteer;
   private platformService = CSGOStats;
 
   getOrCreatePlatform = async (
@@ -46,7 +44,7 @@ class MatchService {
   insertMatch = async ({ body }: Request) => {
     const { url } = body;
 
-    const page = await this.playwright.launchPage(url);
+    const page = await this.puppeteer.launchPage(url);
 
     const matchInfo = await this.platformService.matchInfo(page, url);
 
@@ -109,7 +107,7 @@ class MatchService {
       return await entityManager.save(Match, match);
     });
 
-    await this.playwright.close();
+    await this.puppeteer.close();
 
     return { status: 200, message: match };
   };

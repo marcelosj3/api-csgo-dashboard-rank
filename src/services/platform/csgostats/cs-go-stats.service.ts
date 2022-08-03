@@ -1,4 +1,4 @@
-import { Page } from "playwright";
+import { Page } from "../../../utils/puppeteer/index";
 import { IMatchPlayerInfo, IPlayer } from "../../../interfaces";
 
 import { CSGOStatsBase } from "./cs-go-stats-base.service";
