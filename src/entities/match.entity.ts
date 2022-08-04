@@ -39,7 +39,6 @@ export class Match {
   platform: Platform;
 
   @ManyToMany(() => PlayerMatch, (playerMatch) => playerMatch.matches, {
-    eager: true,
     onDelete: "CASCADE",
   })
   @JoinTable()

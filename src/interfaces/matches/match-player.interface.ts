@@ -3,6 +3,5 @@ import { IPlayerAndMatchStatsInfo } from "../match-player/player-and-match-stats
 
 export interface IMatchPlayerInfo {
   match: IMatchDetails;
-  team_1: IPlayerAndMatchStatsInfo[];
-  team_2: IPlayerAndMatchStatsInfo[];
+  players: IPlayerAndMatchStatsInfo[];
 }

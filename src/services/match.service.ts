@@ -1,5 +1,6 @@
 import { Request } from "express";
 import { EntityManager } from "typeorm";
+
 import { AppDataSource } from "../data-source";
 import { Match, Platform, Scoreboard } from "../entities";
 import { Multikill } from "../entities/multikill.entity";
@@ -7,8 +8,8 @@ import { PlayerMatch } from "../entities/player-match.entity";
 import { PlatformNames } from "../enums";
 import { IScoreboard } from "../interfaces/matches";
 import { PlayerRepository } from "../repositories";
-
 import { Puppeteer } from "../utils/puppeteer";
+
 import { CSGOStats } from "./platform";
 
 class MatchService {
@@ -66,11 +67,8 @@ class MatchService {
         playerMatches: [],
       };
 
-      const players = [...matchInfo.team_1, ...matchInfo.team_2];
-
       const playerMatchesArray = Promise.all(
-        // TODO change these teams to one player array
-        players.map(async (playerDetails) => {
+        matchInfo.players.map(async (playerDetails) => {
           const player = await PlayerRepository.findOne(
             playerDetails.playerInfo.platformPlayerId
           );
@@ -85,10 +83,10 @@ class MatchService {
           const playerMatches = entityManager.create(PlayerMatch, {
             ...playerDetails.matchStats,
             multikill: undefined,
+            player,
           });
 
           playerMatches.multikill = multikill;
-          playerMatches.player = player;
 
           return await entityManager.save(PlayerMatch, playerMatches);
         })

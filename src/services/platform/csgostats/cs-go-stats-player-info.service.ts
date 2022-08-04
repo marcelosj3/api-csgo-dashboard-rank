@@ -11,7 +11,7 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
   playerDetails = async (url: string): Promise<IPlayer> => {
     const details = this.$(".player-ident-outer");
 
-    const name = details.find("#player-name").text();
+    const name = details.find("#player-name").text().trim();
     const imageUrl = details.find("img").attr("src")!;
     const platformPlayerId = this.playerId(url);
 
