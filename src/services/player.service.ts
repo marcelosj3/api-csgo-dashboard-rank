@@ -1,13 +1,11 @@
 import { Request } from "express";
 import { EntityManager } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Match, Platform, Scoreboard } from "../entities";
-import { PlatformCredentials } from "../entities/platform-credentials";
-import { Player } from "../entities/player.entity";
-import { PlatformNames } from "../enums";
-import { IScoreboard } from "../interfaces/matches";
 
-import { Puppeteer } from "../utils/puppeteer";
+import { AppDataSource } from "../data-source";
+import { Platform, PlatformCredentials, Player } from "../entities";
+import { PlatformNames } from "../enums";
+import { Puppeteer } from "../utils";
+
 import { CSGOStats } from "./platform";
 
 class PlayerService {

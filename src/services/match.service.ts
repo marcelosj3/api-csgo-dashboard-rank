@@ -2,13 +2,18 @@ import { Request } from "express";
 import { EntityManager } from "typeorm";
 
 import { AppDataSource } from "../data-source";
-import { Match, Platform, Scoreboard } from "../entities";
-import { Multikill } from "../entities/multikill.entity";
-import { PlayerMatch } from "../entities/player-match.entity";
+import {
+  Match,
+  Multikill,
+  Platform,
+  PlayerMatch,
+  Scoreboard,
+} from "../entities";
 import { PlatformNames } from "../enums";
-import { IScoreboard } from "../interfaces/matches";
-import { PlayerRepository } from "../repositories";
-import { Puppeteer } from "../utils/puppeteer";
+import { UniqueKeyError } from "../errors";
+import { IScoreboard } from "../interfaces";
+import { MatchRepository, PlayerRepository } from "../repositories";
+import { Puppeteer } from "../utils";
 
 import { CSGOStats } from "./platform";
 
@@ -42,12 +47,25 @@ class MatchService {
     return scoreboard;
   };
 
-  insertMatch = async ({ body }: Request) => {
+  // TODO merge this method with others that do the same function
+  getIdFromUrl = (url: string) => {
+    return url.split("/").slice(-1)[0];
+  };
+
+  handleMatch = async ({ body }: Request) => {
     const { url } = body;
+
+    const matchId = this.getIdFromUrl(url);
+    const matchExists = await MatchRepository.findOne(matchId);
+
+    if (matchExists)
+      throw new UniqueKeyError(undefined, undefined, {
+        match: "A match with that id was already registered.",
+      });
 
     const page = await this.puppeteer.launchPage(url);
 
-    const matchInfo = await this.platformService.matchInfo(page, url);
+    const matchInfo = await this.platformService.createMatchInfo(page, url);
 
     const match = await AppDataSource.transaction(async (entityManager) => {
       const platform = await this.getOrCreatePlatform(

@@ -1,14 +1,14 @@
 import { Cheerio, Element } from "cheerio";
-import { Teams } from "../../../enums";
 
+import { Teams } from "../../../../enums";
 import {
   IMultikill,
   IPlayerAndMatchStatsInfo,
   IPlayerMatchInfo,
   IPlayerMatchStats,
-} from "../../../interfaces";
+} from "../../../../interfaces";
 
-import { CSGOStatsBase } from "./cs-go-stats-base.service";
+import { CSGOStatsBase } from "../base";
 
 export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
   MATCH_PLAYER_INFO_INDEX = 0;
