@@ -1,15 +1,13 @@
 import { CheerioAPI, load } from "cheerio";
 
-import { PlatformNames } from "../../../enums";
-import { IMatchDetails, IPlayerMatchInfo } from "../../../interfaces/";
-import { Page } from "../../../utils/puppeteer";
+import { PlatformNames } from "../../../../enums";
+import { IMatchDetails, IPlayerMatchInfo } from "../../../../interfaces";
+import { Page } from "../../../../utils";
 
 export class CSGOStatsBase {
   platform: PlatformNames = PlatformNames.CSGOSTATS;
   match: IMatchDetails;
-  // TODO change theses teams to an only players array
-  team_1: IPlayerMatchInfo[];
-  team_2: IPlayerMatchInfo[];
+  players: IPlayerMatchInfo[];
   $: CheerioAPI;
 
   content = async (page: Page) => {

@@ -1,18 +1,18 @@
 import { Request } from "express";
 import { EntityManager } from "typeorm";
-import { AppDataSource } from "../data-source";
-import { Match, Platform, Scoreboard } from "../entities";
-import { PlatformCredentials } from "../entities/platform-credentials";
-import { Player } from "../entities/player.entity";
-import { PlatformNames } from "../enums";
-import { IScoreboard } from "../interfaces/matches";
 
-import { Puppeteer } from "../utils/puppeteer";
+import { AppDataSource } from "../data-source";
+import { Platform, PlatformCredentials, Player } from "../entities";
+import { PlatformNames } from "../enums";
+import { InvalidUrlError } from "../errors";
+import { playerSerializer, Puppeteer } from "../utils";
+
 import { CSGOStats } from "./platform";
 
 class PlayerService {
   private puppeteer = Puppeteer;
   private platformService = CSGOStats;
+  private baseUrl = "csgostats.gg/player/";
 
   getOrCreatePlatform = async (
     name: PlatformNames,
@@ -27,8 +27,14 @@ class PlayerService {
     return platform;
   };
 
+  validateUrl = (url: string) => {
+    if (!url.includes(this.baseUrl)) throw new InvalidUrlError();
+  };
+
   insertPlayer = async ({ body }: Request) => {
     const { url } = body;
+
+    this.validateUrl(url);
 
     const page = await this.puppeteer.launchPage(url);
 
@@ -63,7 +69,9 @@ class PlayerService {
 
     await this.puppeteer.close();
 
-    return { status: 200, message: player };
+    const playerSerialized = playerSerializer(player);
+
+    return { status: 200, message: playerSerialized };
   };
 }
 

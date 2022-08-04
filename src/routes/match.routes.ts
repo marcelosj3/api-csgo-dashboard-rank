@@ -4,7 +4,7 @@ import { MatchController } from "../controllers";
 const router: Router = Router();
 
 export const matchRoutes = (): Router => {
-  router.post("", MatchController.insertMatch);
+  router.post("", MatchController.handleMatch);
 
   return router;
 };

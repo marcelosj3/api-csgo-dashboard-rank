@@ -1,15 +1,18 @@
-import { Page } from "../../../utils/puppeteer/index";
 import { IMatchPlayerInfo, IPlayer } from "../../../interfaces";
+import { Page } from "../../../utils";
 
-import { CSGOStatsBase } from "./cs-go-stats-base.service";
-import { CSGOStatsMatchInfo } from "./cs-go-stats-match-info.service";
-import { CSGOStatsPlayerInfo } from "./cs-go-stats-player-info.service";
+import { CSGOStatsBase } from "./base";
+import { CSGOStatsMatchInfo } from "./match";
+import { CSGOStatsPlayerInfo } from "./player";
 
 class CSGOStats extends CSGOStatsBase {
   playerInfoClass = new CSGOStatsPlayerInfo();
   matchInfoClass = new CSGOStatsMatchInfo();
 
-  matchInfo = async (page: Page, url: string): Promise<IMatchPlayerInfo> => {
+  createMatchInfo = async (
+    page: Page,
+    url: string
+  ): Promise<IMatchPlayerInfo> => {
     this.$ = await this.matchInfoClass.content(page);
     this.match = await this.matchInfoClass.matchDetails(url);
     const players = await this.matchInfoClass.teamDetails();

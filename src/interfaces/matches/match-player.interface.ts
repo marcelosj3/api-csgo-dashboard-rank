@@ -1,5 +1,5 @@
 import { IMatchDetails } from ".";
-import { IPlayerAndMatchStatsInfo } from "../match-player/player-and-match-stats-info.interface";
+import { IPlayerAndMatchStatsInfo } from "../match-players/player-and-match-stats-info.interface";
 
 export interface IMatchPlayerInfo {
   match: IMatchDetails;
