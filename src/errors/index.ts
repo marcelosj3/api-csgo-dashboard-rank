@@ -1,3 +1,3 @@
 export { AppError } from "./base";
 
-export { UniqueKeyError } from "./generic";
+export { InvalidUrlError, UniqueKeyError } from "./generic";
