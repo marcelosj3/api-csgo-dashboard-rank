@@ -29,7 +29,6 @@ export class Player {
   platformCredentials: PlatformCredentials[];
 
   @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.player, {
-    eager: true,
     onDelete: "CASCADE",
   })
   playerMatches: PlayerMatch[];

@@ -5,8 +5,8 @@ class RankService {
     const playerMatches = await PlayerMatchRepository.findAll();
 
     const playerByKills = playerMatches
-      .map((player) => {
-        return { name: player.player.name, kills: player.kills };
+      .map((playerMatch) => {
+        return { name: playerMatch.player.name, kills: playerMatch.kills };
       })
       .sort((playerA, playerB) => {
         if (playerA.kills > playerB.kills) return -1;

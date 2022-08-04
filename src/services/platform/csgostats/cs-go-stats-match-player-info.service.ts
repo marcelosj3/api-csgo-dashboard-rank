@@ -57,14 +57,6 @@ export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
     return playerInfoStats;
   };
 
-  matchGetTeam = (teamIndex: number): Teams => {
-    const team = Teams.TEAM_1.includes(String(teamIndex))
-      ? Teams.TEAM_1
-      : Teams.TEAM_2;
-
-    return team;
-  };
-
   matchPlayer = async (
     playerElement: Cheerio<Element>,
     teamIndex: number
@@ -94,7 +86,7 @@ export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
   ): Promise<IMultikill> => {
     const matchPlayerStatsArray = this.matchPlayerStatsArray(playerElement).map(
       (statsElement, index) => {
-        const stats = this.$(statsElement);
+        const stats: Cheerio<Element> = this.$(statsElement);
 
         switch (index) {
           case this.MATCH_MULTIKILL_5K_INDEX:
@@ -116,6 +108,14 @@ export class CSGOStatsMatchPlayerInfo extends CSGOStatsBase {
     );
 
     return playerMatchStats;
+  };
+
+  matchGetTeam = (teamIndex: number): Teams => {
+    const team = Teams.TEAM_1.includes(String(teamIndex))
+      ? Teams.TEAM_1
+      : Teams.TEAM_2;
+
+    return team;
   };
 
   matchPlayerStats = async (

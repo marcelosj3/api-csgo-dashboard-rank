@@ -37,7 +37,7 @@ export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
     };
   };
 
-  teamDetails = async (): Promise<IPlayerAndMatchStatsInfo[][]> => {
+  teamDetails = async (): Promise<IPlayerAndMatchStatsInfo[]> => {
     const TEAMS_INDEXES = [0, 2];
     const TEAM_STAT_INDEX = 0;
 
@@ -74,6 +74,6 @@ export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
       teamStats.push(matchPlayer);
     }
 
-    return teamStats;
+    return teamStats.flat();
   };
 }

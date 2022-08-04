@@ -21,8 +21,6 @@ export class Multikill {
   @Column({ type: "int" })
   _5k: number;
 
-  @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.multikill, {
-    eager: true,
-  })
+  @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.multikill)
   playerMatches: PlayerMatch[];
 }

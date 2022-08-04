@@ -13,6 +13,6 @@ export class Scoreboard {
   @Column({ type: "int", nullable: false })
   team2Rounds: number;
 
-  @OneToMany(() => Match, (match) => match.scoreboard, { eager: true })
+  @OneToMany(() => Match, (match) => match.scoreboard)
   matches: Match[];
 }
