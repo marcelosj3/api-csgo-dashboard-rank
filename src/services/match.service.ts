@@ -13,7 +13,7 @@ import { PlatformNames } from "../enums";
 import { UniqueKeyError } from "../errors";
 import { IScoreboard } from "../interfaces";
 import { MatchRepository, PlayerRepository } from "../repositories";
-import { Puppeteer } from "../utils";
+import { matchSerializer, Puppeteer } from "../utils";
 
 import { CSGOStats } from "./platform";
 
@@ -125,7 +125,9 @@ class MatchService {
 
     await this.puppeteer.close();
 
-    return { status: 200, message: match };
+    const serializedMatch = matchSerializer(match);
+
+    return { status: 200, message: serializedMatch };
   };
 }
 

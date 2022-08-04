@@ -4,7 +4,7 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Platform, PlatformCredentials, Player } from "../entities";
 import { PlatformNames } from "../enums";
-import { Puppeteer } from "../utils";
+import { playerSerializer, Puppeteer } from "../utils";
 
 import { CSGOStats } from "./platform";
 
@@ -61,7 +61,9 @@ class PlayerService {
 
     await this.puppeteer.close();
 
-    return { status: 200, message: player };
+    const playerSerialized = playerSerializer(player);
+
+    return { status: 200, message: playerSerialized };
   };
 }
 
