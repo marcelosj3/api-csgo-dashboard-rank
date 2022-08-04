@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.2.0...v1.3.0) (2022-08-04)
+
+
+### Features
+
+* implement query param url to rank kills, create interface to return ([01d2f9a](https://github.com/marcelosj3/csgodashboardrank/commit/01d2f9aacf69f315b6ef1fddd5d4a8f1b43c0e6e))
+
 ## [1.2.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.1.1...v1.2.0) (2022-08-04)
 
 
