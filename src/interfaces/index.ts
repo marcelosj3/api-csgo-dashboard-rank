@@ -11,6 +11,8 @@ export { IMatchDetails, IMatchPlayerInfo, IScoreboard } from "./matches";
 
 export { IPlayer } from "./players";
 
+export { IKillsRank } from "./ranks";
+
 export {
   IMatchSerializer,
   IPlatformCredentialsSerializer,
