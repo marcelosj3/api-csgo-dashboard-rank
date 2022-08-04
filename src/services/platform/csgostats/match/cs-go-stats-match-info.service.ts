@@ -1,8 +1,12 @@
-import { IMatchDetails, IPlayerAndMatchStatsInfo } from "../../../interfaces";
+import {
+  IMatchDetails,
+  IPlayerAndMatchStatsInfo,
+} from "../../../../interfaces";
 
 import { CSGOStatsMatchPlayerInfo } from "./cs-go-stats-match-player-info.service";
 
 export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
+  // TODO merge this method with others that do the same function
   matchId = (url: string): string => {
     return url.split("/").slice(-1)[0];
   };

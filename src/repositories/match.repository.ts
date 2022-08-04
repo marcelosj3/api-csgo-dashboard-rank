@@ -14,6 +14,9 @@ class MatchRepository {
 
   findAll = () => this.repo.find({ relations: ["platform", "scoreboard"] });
 
+  findOne = (platformMatchId: string) =>
+    this.repo.findOne({ where: { platformMatchId } });
+
   save = async (match: Match) => await this.repo.save(match);
 }
 
