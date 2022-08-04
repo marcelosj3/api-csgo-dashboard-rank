@@ -11,4 +11,4 @@
   - [Register Matches](#register-matches)
 - [Ranks](#ranks)
   - [Rank-Kills](#rank-kills)
-    - [Display all kills sorted by higher to lower](#rank-kills-sorted)
+    -[Display all kills sorted by higher to lower](#rank-kills-sorted)  
