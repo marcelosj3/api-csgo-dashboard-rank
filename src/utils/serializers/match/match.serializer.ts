@@ -1,8 +1,9 @@
 import { Match } from "../../../entities";
+import { IMatchSerializer } from "../../../interfaces";
 
 import { playerMatchSerializer } from "./players-match.serializer";
 
-export const matchSerializer = (match: Match) => {
+export const matchSerializer = (match: Match): IMatchSerializer => {
   return {
     platform: match.platform.name,
     platformMatchId: match.platformMatchId,

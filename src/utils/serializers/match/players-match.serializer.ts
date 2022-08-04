@@ -1,6 +1,9 @@
 import { PlayerMatch } from "../../../entities";
+import { IPlayerMatchSerializer } from "../../../interfaces";
 
-export const playerMatchSerializer = (playerMatch: PlayerMatch) => {
+export const playerMatchSerializer = (
+  playerMatch: PlayerMatch
+): IPlayerMatchSerializer => {
   return {
     player: playerMatch.player.name,
     team: playerMatch.team,
