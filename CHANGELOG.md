@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.1.1...v1.2.0) (2022-08-04)
+
+
+### Features
+
+* create custom error, manage unique match id case, minor refactor ([8f2c7f5](https://github.com/marcelosj3/csgodashboardrank/commit/8f2c7f540c123712425e97a485061a741d665022))
+* create invalid url error, implement into the requests ([6fa90df](https://github.com/marcelosj3/csgodashboardrank/commit/6fa90dfb870b93d74c1c67cb51d078a83b634324))
+* implement interfaces to each serializer ([d033f0a](https://github.com/marcelosj3/csgodashboardrank/commit/d033f0abf6f696fb2a39a004d0f1cab4f124148d))
+* match and players match serializer ([d7c6382](https://github.com/marcelosj3/csgodashboardrank/commit/d7c6382702be1ef5492180f8f06f45cf6825f5f4))
+* player serializer and platform credentials serializer ([e4ba004](https://github.com/marcelosj3/csgodashboardrank/commit/e4ba0040bb63ebccabebd8c0043ff3b32ea56697))
+
 ### [1.1.1](https://github.com/marcelosj3/csgodashboardrank/compare/v1.1.0...v1.1.1) (2022-08-04)
 
 ## 1.1.0 (2022-08-04)
