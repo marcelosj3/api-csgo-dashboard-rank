@@ -1,2 +1,6 @@
 export { Puppeteer, Page } from "./puppeteer";
-export { matchSerializer } from "./serializers";
+export {
+  matchSerializer,
+  platformCredentialsSerializer,
+  playerSerializer,
+} from "./serializers";

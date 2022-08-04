@@ -123,9 +123,9 @@ class MatchService {
       return await entityManager.save(Match, match);
     });
 
-    const serializedMatch = matchSerializer(match);
-
     await this.puppeteer.close();
+
+    const serializedMatch = matchSerializer(match);
 
     return { status: 200, message: serializedMatch };
   };
