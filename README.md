@@ -6,22 +6,18 @@
 ---
 ## Summary
 - [Players](#players)
-
   - [Register players](#register-players)
   - [Errors](#errors-players)
     - [Register a player with an incorrect url](#register-player-with-incorrect-url)
-  
-- [Matches](#matches)
-
+- [Matches](#matches) 
   - [Register matches](#register-matches)
   - [Errors](#errors-matches)
     - [Register match with an incorrect url](#register-match-with-incorrect-url)
-
+    - [Register an already existing match](#register-already-match)
 - [Ranks](#ranks)
-
   - [Kills](#rank-kills-sorted)
-    - [Display all kills with match url](#rank-kills-match_url)
-
+    - [Query params](#query-params)
+      - [Display all kills with match url](#rank-kills-match_url)
 
 ---
 ## <center>**Players** <a id="players"></a></center>
@@ -58,8 +54,9 @@ HTTP: 200 - OK
  ]
 }
 ```
-### Errors<a id="errors-players"></a>
 
+<details>
+<summary style="font-size:20px;font-weight:bold;color:black">Errors<a id="errors-players"></summary></a>
 <a id="register-player-with-incorrect-url"></a>
 <details>
 <summary>Register a player with an incorrect url</summary>
@@ -67,7 +64,7 @@ HTTP: 200 - OK
 **Body:**
 ```json
 {
-	"url": "https://csgostats.gg/matches/76561198382398436"
+  "url": "https://csgostats.gg/matches/76561198382398436"
 }
 ```
 Response:
@@ -76,13 +73,14 @@ HTTP: 400 - BAD REQUEST
 ```
 ```json
 {
-	"status": "error",
-	"code": 400,
-	"message": {
-		"error": "Invalid url received"
-	}
+  "status": "error",
+  "code": 400,
+  "message": {
+    "error": "Invalid url received"
+  }
 }
 ```
+</details>
 </details>
 
 ---
@@ -146,7 +144,8 @@ HTTP: 200 - OK
   ]
 }
 ```
-### Errors<a id="errors-matches"></a>
+<details>
+<summary style="font-size:20px;font-weight:bold;color:black">Errors</summary><a id="errors-matches"></a>
 
 <a id="register-match-with-incorrect-url"></a>
 <details>
@@ -155,7 +154,7 @@ HTTP: 200 - OK
 **Body:**
 ```json
 {
-	"url": "https://csgostats.gg/matches/72090725"
+  "url": "https://csgostats.gg/matches/72090725"
 }
 ```
 Response:
@@ -164,23 +163,51 @@ HTTP: 400 - BAD REQUEST
 ```
 ```json
 {
-	"status": "error",
-	"code": 400,
-	"message": {
-		"error": "Invalid url received"
-	}
+  "status": "error",
+  "code": 400,
+  "message": {
+    "error": "Invalid url received"
+  }
 }
 ```
+</details>
+
+<a id="register-already-match"></a>
+<details>
+<summary>Register an already existing match</summary>
+
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/match/72090725"
+}
+```
+Response:
+```
+HTTP: 409 - CONFLICT
+```
+```json
+{
+  "status": "error",
+  "code": 409,
+  "message": {
+    "match": "A match with that id was already registered."
+  }
+}
+```
+</details>
 </details>
 
 ---
 ## <center>**Ranks** <a id="ranks"></a></center>
 ---
 
-###Kills
-<a id="rank-kills-sorted"></a>
 <details>
-<summary>Display the number of kills from the higher to the lower amount</summary>
+<summary style="font-size:28px;font-weight:bold;color:black">Kills</summary>
+<a id="rank-kills-sorted"></a>
+
+
+Display the number of kills from the higher to the lower amount
 
 ```
 GET - /api/ranks/kills/
@@ -224,12 +251,13 @@ HTTP: 200 - OK
   }
 ]
 ```
-</details>
-
-### Query params
 
 <details>
-<summary>Display all kills with match url</summary> <a id="rank-kills-match_url"></a>
+<summary style="font-size:20px;font-weight:bold;color:black">Query params</summary> <a id="query-params"></a>
+
+<details>
+<a id="rank-kills-match_url"></a>
+<summary>Display all kills with match url</summary>
 
 ```
 GET - /api/ranks/kills/?match_url
@@ -279,5 +307,7 @@ HTTP: 200 - OK
   }
 ]
 ```
+</details>
+</details>
 </details>
 
