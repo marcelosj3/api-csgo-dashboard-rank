@@ -36,7 +36,7 @@ Register a player into the database
   "url": "https://csgostats.gg/player/76561198062653475"
 }
 ```
-Response:
+**Response:**
 ```
 HTTP: 200 - OK
 ```
@@ -67,7 +67,7 @@ HTTP: 200 - OK
   "url": "https://csgostats.gg/matches/76561198382398436"
 }
 ```
-Response:
+**Response:**
 ```
 HTTP: 400 - BAD REQUEST
 ```
@@ -100,7 +100,7 @@ Register a match into the database and also register all registered players stat
   "url": "https://csgostats.gg/match/72090725"
 }
 ```
-Response:
+**Response:**
 ```
 HTTP: 200 - OK
 ```
@@ -157,7 +157,7 @@ HTTP: 200 - OK
   "url": "https://csgostats.gg/matches/72090725"
 }
 ```
-Response:
+**Response:**
 ```
 HTTP: 400 - BAD REQUEST
 ```
@@ -182,7 +182,7 @@ HTTP: 400 - BAD REQUEST
   "url": "https://csgostats.gg/match/72090725"
 }
 ```
-Response:
+**Response:**
 ```
 HTTP: 409 - CONFLICT
 ```
@@ -215,7 +215,7 @@ GET - /api/ranks/kills/
 
 Display the number of kills from all the registered players sorted from the higher to the lower amount
 
-Response:
+**Response:**
 ```
 HTTP: 200 - OK
 ```
@@ -264,7 +264,7 @@ GET - /api/ranks/kills/?match_url
 ```
 Display the number of kills from all the registered players with a match url for the match that registered that amount of kills 
 
-Response:
+**Response:**
 ```
 HTTP: 200 - OK
 ```
