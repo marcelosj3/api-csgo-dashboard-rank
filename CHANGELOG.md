@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.3.0...v1.4.0) (2022-08-06)
+
+
+### Features
+
+* add serializer to players and platform credentials query params ([6881601](https://github.com/marcelosj3/csgodashboardrank/commit/688160183a81a14b03ce6238f4e6338b0b4a850b))
+* assign already existing multikill values ([bbf2b7e](https://github.com/marcelosj3/csgodashboardrank/commit/bbf2b7e63889dd6fc1483ea89302ade1e306eecb))
+* entity polishness, exports and player duplicates handler ([3ab55a1](https://github.com/marcelosj3/csgodashboardrank/commit/3ab55a12cd638e3e06bb6946fa48436e98cf6cb6))
+* fetch all players ([34b5bfd](https://github.com/marcelosj3/csgodashboardrank/commit/34b5bfd1c9e0fbc363c69818a6c19386f386b6db))
+* fetch all registered matches, query params to include players info ([b29dc0c](https://github.com/marcelosj3/csgodashboardrank/commit/b29dc0c9f27dac3adbcba6bd326eabdcbef3f194))
+* not found custom error, 404 page check and polishness ([653dd2b](https://github.com/marcelosj3/csgodashboardrank/commit/653dd2b7ddb8e46f5a6d185e502a89738b0d5ec1))
+* util 404 check function and match 404 url checker ([485592c](https://github.com/marcelosj3/csgodashboardrank/commit/485592c890cea3da8336be9fe105bb5e433c9725))
+
+
+### Bug Fixes
+
+* move serializer folder to src ([964e535](https://github.com/marcelosj3/csgodashboardrank/commit/964e535ad09ab98540d696bee66170329e400cbb))
+
 ## [1.3.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.2.0...v1.3.0) (2022-08-04)
 
 
