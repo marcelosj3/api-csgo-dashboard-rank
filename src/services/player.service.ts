@@ -91,6 +91,12 @@ class PlayerService {
 
     return { status: 200, message: playerSerialized };
   };
+
+  getAll = async () => {
+    const players = await PlayerRepository.findAll();
+
+    return { status: 200, message: players };
+  };
 }
 
 export default new PlayerService();
