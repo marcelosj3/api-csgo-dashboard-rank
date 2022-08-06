@@ -1,5 +1,5 @@
-import { Scoreboard } from "../../../entities";
-import { IScoreboardSerializer } from "../../../interfaces";
+import { Scoreboard } from "../../entities";
+import { IScoreboardSerializer } from "../../interfaces";
 
 export const scoreboardSerializer = (
   scoreboard: Scoreboard

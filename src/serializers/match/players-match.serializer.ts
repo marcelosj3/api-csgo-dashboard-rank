@@ -1,5 +1,5 @@
-import { PlayerMatch } from "../../../entities";
-import { IPlayerMatchSerializer } from "../../../interfaces";
+import { PlayerMatch } from "../../entities";
+import { IPlayerMatchSerializer } from "../../interfaces";
 
 export const playerMatchSerializer = (
   playerMatch: PlayerMatch

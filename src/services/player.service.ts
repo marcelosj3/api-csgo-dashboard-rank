@@ -4,15 +4,11 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Platform, PlatformCredentials, Player } from "../entities";
 import { PlatformNames } from "../enums";
-import { NotFoundError, UniqueKeyError } from "../errors";
+import { UniqueKeyError } from "../errors";
 import { PlayerRepository } from "../repositories";
-import { TPage, TPuppeteer } from "../types";
-import {
-  pageOr404,
-  playerSerializer,
-  Puppeteer,
-  validateAndReturnUrlAndId,
-} from "../utils";
+import { playerSerializer } from "../serializers";
+import { TPuppeteer } from "../types";
+import { pageOr404, Puppeteer, validateAndReturnUrlAndId } from "../utils";
 
 import { CSGOStats } from "./platform";
 

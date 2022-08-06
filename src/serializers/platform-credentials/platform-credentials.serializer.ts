@@ -1,5 +1,5 @@
-import { PlatformCredentials } from "../../../entities";
-import { IPlatformCredentialsSerializer } from "../../../interfaces";
+import { PlatformCredentials } from "../../entities";
+import { IPlatformCredentialsSerializer } from "../../interfaces";
 
 export const platformCredentialsSerializer = (
   platformCredentials: PlatformCredentials

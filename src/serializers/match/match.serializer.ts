@@ -1,5 +1,5 @@
-import { Match } from "../../../entities";
-import { IMatchSerializer } from "../../../interfaces";
+import { Match, PlayerMatch } from "../../entities";
+import { IMatchSerializer } from "../../interfaces";
 
 import { playerMatchSerializer } from "./players-match.serializer";
 import { scoreboardSerializer } from "./scoreboard.serializer";
@@ -12,6 +12,8 @@ export const matchSerializer = (match: Match): IMatchSerializer => {
     mapName: match.mapName,
     date: match.date,
     scoreboard: scoreboardSerializer(match.scoreboard),
-    players: match.playerMatches.map((player) => playerMatchSerializer(player)),
+    players: match.playerMatches.map((player: PlayerMatch) =>
+      playerMatchSerializer(player)
+    ),
   };
 };

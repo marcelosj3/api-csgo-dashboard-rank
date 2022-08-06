@@ -1,5 +1,5 @@
-import { Player } from "../../../entities";
-import { IPlayerSerializer } from "../../../interfaces";
+import { Player } from "../../entities";
+import { IPlayerSerializer } from "../../interfaces";
 
 import { platformCredentialsSerializer } from "../platform-credentials";
 

@@ -13,12 +13,8 @@ import { PlatformNames } from "../enums";
 import { UniqueKeyError } from "../errors";
 import { IScoreboard } from "../interfaces";
 import { MatchRepository, PlayerRepository } from "../repositories";
-import {
-  matchSerializer,
-  pageOr404,
-  Puppeteer,
-  validateAndReturnUrlAndId,
-} from "../utils";
+import { matchSerializer } from "../serializers";
+import { pageOr404, Puppeteer, validateAndReturnUrlAndId } from "../utils";
 
 import { CSGOStats } from "./platform";
 
