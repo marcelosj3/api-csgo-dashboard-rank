@@ -1,4 +1,5 @@
 import { PlatformNames } from "../../../enums";
+import { IPlayerSerializer } from "../players";
 import { IPlayerMatchSerializer } from "./player-match.serializer.interface";
 import { IScoreboardSerializer } from "./scoreboard.serializer.interface";
 
@@ -8,6 +9,6 @@ export interface IMatchSerializer {
   matchUrl: string;
   mapName: string;
   date: Date;
-  scoreboard: IScoreboardSerializer;
-  players: IPlayerMatchSerializer[];
+  scoreboard?: IScoreboardSerializer;
+  players?: (IPlayerSerializer | IPlayerMatchSerializer)[];
 }

@@ -146,6 +146,25 @@ class MatchService {
 
     return { status: 200, message: serializedMatch };
   };
+
+  getAll = async ({ query }: Request) => {
+    const players = query.hasOwnProperty("players");
+
+    console.log();
+    console.log("players", players);
+    console.log();
+
+    const matches = await MatchRepository.findAll(players);
+
+    console.log();
+    console.log(matches[0].playerMatches);
+    console.log();
+    const serializedMatches = matches.map((match) =>
+      matchSerializer(match, players)
+    );
+
+    return { status: 200, message: serializedMatches };
+  };
 }
 
 export default new MatchService();
