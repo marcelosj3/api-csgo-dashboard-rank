@@ -4,8 +4,9 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Platform, PlatformCredentials, Player } from "../entities";
 import { PlatformNames } from "../enums";
-import { UniqueKeyError } from "../errors";
+import { NotFoundError, UniqueKeyError } from "../errors";
 import { PlayerRepository } from "../repositories";
+import { TPage, TPuppeteer } from "../types";
 import {
   playerSerializer,
   Puppeteer,
@@ -15,7 +16,7 @@ import {
 import { CSGOStats } from "./platform";
 
 class PlayerService {
-  private puppeteer = Puppeteer;
+  private puppeteer: TPuppeteer = Puppeteer;
   // TODO when defining a new platform, create a logic
   // to redefine these variables
   private platformService = CSGOStats;
@@ -35,6 +36,21 @@ class PlayerService {
     return platform;
   };
 
+  pageOr404 = async (url: string): Promise<TPage> => {
+    const page = await this.puppeteer.launchPage(url);
+
+    const content = await this.platformService.content(page);
+
+    const has404 = content("h1").text().includes("404");
+
+    if (has404) {
+      this.puppeteer.close();
+      throw new NotFoundError("player");
+    }
+
+    return page;
+  };
+
   insertPlayer = async ({ body }: Request) => {
     const { url: receivedUrl } = body;
 
@@ -44,18 +60,22 @@ class PlayerService {
       this.playerUrl
     );
 
-    const hasPlayer = await PlayerRepository.findOne(platformPlayerId);
+    const hasPlatformPlayer = await PlayerRepository.findOne(
+      platformPlayerId,
+      this.platformService.platform
+    );
 
-    if (hasPlayer)
+    if (hasPlatformPlayer)
       throw new UniqueKeyError(undefined, undefined, {
-        player: "A player with that platform id has already been registered.",
+        error: "A player with that platform id has already been registered.",
       });
 
-    const page = await this.puppeteer.launchPage(url);
+    const page = await this.pageOr404(url);
 
     const playerInfo = await this.platformService.playerInfo(
       page,
-      platformPlayerId
+      platformPlayerId,
+      this.puppeteer
     );
 
     const player = await AppDataSource.transaction(async (entityManager) => {
@@ -67,7 +87,7 @@ class PlayerService {
       const platformCredentials = await entityManager.save(
         PlatformCredentials,
         {
-          platformNames: platform,
+          platform: platform,
           platformPlayerId: playerInfo.platformPlayerId,
         }
       );
@@ -84,8 +104,6 @@ class PlayerService {
 
       return await entityManager.save(Player, player);
     });
-
-    await this.puppeteer.close();
 
     const playerSerialized = playerSerializer(player);
 

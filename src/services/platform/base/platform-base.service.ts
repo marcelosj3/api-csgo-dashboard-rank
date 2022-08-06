@@ -2,7 +2,7 @@ import { CheerioAPI, load } from "cheerio";
 
 import { PlatformNames } from "../../../enums";
 import { IMatchDetails, IPlayerAndMatchStatsInfo } from "../../../interfaces";
-import { Page } from "../../../utils";
+import { TPage } from "../../../types";
 
 export class PlatformBase {
   platform: PlatformNames;
@@ -14,7 +14,7 @@ export class PlatformBase {
   matchUrlEndpoint: string;
   steamProfileEndpoint: string = "https://steamcommunity.com/profiles/";
 
-  content = async (page: Page) => {
+  content = async (page: TPage) => {
     const rawContent = await page.content();
     const content = load(rawContent);
 

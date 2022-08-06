@@ -1,4 +1,6 @@
-export { Puppeteer, Page } from "./puppeteer";
+export { capitalize } from "./generics";
+
+export { Puppeteer } from "./puppeteer";
 
 export {
   matchSerializer,

@@ -7,13 +7,14 @@ export class CSGOStatsPlayerInfo extends CSGOStatsBase {
   playerDetails = async (playerId: string): Promise<IPlayer> => {
     const details = this.$(".player-ident-outer");
 
+    const steamPlayerId = details
+      .find("div > a")
+      .attr("href")!
+      .replace(this.steamProfileEndpoint, "");
+
     const name = details.find("#player-name").text().trim();
     const imageUrl = details.find("img").attr("src")!;
     const platformPlayerId = playerId;
-    const steamPlayerId = details
-      .find("div > a")
-      .attr("href")
-      ?.replace(this.steamProfileEndpoint, "")!;
 
     return {
       playerId: steamPlayerId,

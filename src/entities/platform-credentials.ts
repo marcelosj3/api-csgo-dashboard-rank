@@ -12,7 +12,7 @@ export class PlatformCredentials {
   platformPlayerId: string;
 
   @ManyToOne(() => Platform, (platform) => platform.platformCredentials)
-  platformNames: Platform;
+  platform: Platform;
 
   @ManyToOne(() => Player, (player) => player.platformCredentials, {
     onDelete: "CASCADE",

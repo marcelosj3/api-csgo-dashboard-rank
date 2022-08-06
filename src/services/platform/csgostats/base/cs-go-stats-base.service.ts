@@ -1,5 +1,3 @@
-import { CheerioAPI, load } from "cheerio";
-
 import { PlatformNames } from "../../../../enums";
 import { PlatformBase } from "../../base";
 

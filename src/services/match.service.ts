@@ -94,7 +94,8 @@ class MatchService {
       const playerMatchesArray = Promise.all(
         matchInfo.players.map(async (playerDetails) => {
           const player = await PlayerRepository.findOne(
-            playerDetails.playerInfo.platformPlayerId
+            playerDetails.playerInfo.platformPlayerId,
+            this.platformService.platform
           );
 
           if (!player) return undefined;

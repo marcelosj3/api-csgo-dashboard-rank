@@ -1,5 +1,5 @@
 import { IMatchPlayerInfo, IPlayer } from "../../../interfaces";
-import { Page } from "../../../utils";
+import { TPage, TPuppeteer } from "../../../types";
 
 import { CSGOStatsBase } from "./base";
 import { CSGOStatsMatchInfo } from "./match";
@@ -10,7 +10,7 @@ class CSGOStats extends CSGOStatsBase {
   matchInfoClass = new CSGOStatsMatchInfo();
 
   createMatchInfo = async (
-    page: Page,
+    page: TPage,
     url: string
   ): Promise<IMatchPlayerInfo> => {
     this.$ = await this.matchInfoClass.content(page);
@@ -20,9 +20,15 @@ class CSGOStats extends CSGOStatsBase {
     return { match: this.match, players: this.players };
   };
 
-  playerInfo = async (page: Page, playerId: string): Promise<IPlayer> => {
+  playerInfo = async (
+    page: TPage,
+    playerId: string,
+    puppeteer: TPuppeteer
+  ): Promise<IPlayer> => {
     this.$ = await this.playerInfoClass.content(page);
     const playerInfo = await this.playerInfoClass.playerDetails(playerId);
+
+    await puppeteer.close();
 
     return playerInfo;
   };
