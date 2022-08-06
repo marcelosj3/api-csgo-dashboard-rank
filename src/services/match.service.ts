@@ -11,7 +11,7 @@ import {
 } from "../entities";
 import { PlatformNames } from "../enums";
 import { UniqueKeyError } from "../errors";
-import { IScoreboard } from "../interfaces";
+import { IMultikill, IScoreboard } from "../interfaces";
 import { MatchRepository, PlayerRepository } from "../repositories";
 import { matchSerializer } from "../serializers";
 import { pageOr404, Puppeteer, validateAndReturnUrlAndId } from "../utils";
@@ -48,6 +48,19 @@ class MatchService {
     }
 
     return scoreboard;
+  };
+
+  getOrCreateMultikill = async (
+    multikillInfo: IMultikill,
+    entityManager: EntityManager
+  ) => {
+    let multikill = await entityManager.findOneBy(Multikill, multikillInfo);
+
+    if (!multikill) {
+      multikill = await entityManager.save(Multikill, multikillInfo);
+    }
+
+    return multikill;
   };
 
   handleMatch = async ({ body }: Request) => {
@@ -97,9 +110,9 @@ class MatchService {
 
           if (!player) return undefined;
 
-          const multikill = await entityManager.save(
-            Multikill,
-            playerDetails.matchStats.multikill
+          const multikill = await this.getOrCreateMultikill(
+            playerDetails.matchStats.multikill,
+            entityManager
           );
 
           const playerMatches = entityManager.create(PlayerMatch, {
