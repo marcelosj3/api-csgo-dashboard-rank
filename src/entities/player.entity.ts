@@ -1,18 +1,12 @@
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
+
 import { PlatformCredentials } from "./platform-credentials";
 import { PlayerMatch } from "./player-match.entity";
 
 @Entity("players")
 export class Player {
-  @PrimaryGeneratedColumn("uuid")
-  readonly playerId?: string;
+  @PrimaryColumn()
+  playerId: string;
 
   @Column()
   name: string;
@@ -20,12 +14,11 @@ export class Player {
   @Column()
   imageUrl: string;
 
-  @ManyToMany(
+  @OneToMany(
     () => PlatformCredentials,
     (platformCredentials) => platformCredentials.players,
     { onDelete: "CASCADE" }
   )
-  @JoinTable()
   platformCredentials: PlatformCredentials[];
 
   @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.player, {

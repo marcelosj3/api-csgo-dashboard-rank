@@ -20,7 +20,7 @@ export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
 
     const mapName = details.find(MAP_NAME_PATH).text();
     const matchDate = this.dateHandler(details.find(DATE_PATH).text());
-    const platform_id = this.matchId(url);
+    const platformId = this.matchId(url);
     const team1Rounds = Number(
       details.find(".team-0-score > div > span").text()
     );
@@ -31,7 +31,7 @@ export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
     return {
       platform: this.platform,
       date: matchDate,
-      platformMatchId: platform_id,
+      platformMatchId: platformId,
       mapName,
       matchUrl: url,
       scoreboard: {

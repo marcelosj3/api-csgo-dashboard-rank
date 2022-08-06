@@ -4,15 +4,23 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Platform, PlatformCredentials, Player } from "../entities";
 import { PlatformNames } from "../enums";
-import { InvalidUrlError } from "../errors";
-import { playerSerializer, Puppeteer } from "../utils";
+import { UniqueKeyError } from "../errors";
+import { PlayerRepository } from "../repositories";
+import {
+  playerSerializer,
+  Puppeteer,
+  validateAndReturnUrlAndId,
+} from "../utils";
 
 import { CSGOStats } from "./platform";
 
 class PlayerService {
   private puppeteer = Puppeteer;
+  // TODO when defining a new platform, create a logic
+  // to redefine these variables
   private platformService = CSGOStats;
-  private baseUrl = "csgostats.gg/player/";
+  private baseUrl: string = CSGOStats.baseUrl;
+  private playerUrl: string = CSGOStats.playerUrlEndpoint;
 
   getOrCreatePlatform = async (
     name: PlatformNames,
@@ -27,18 +35,28 @@ class PlayerService {
     return platform;
   };
 
-  validateUrl = (url: string) => {
-    if (!url.includes(this.baseUrl)) throw new InvalidUrlError();
-  };
-
   insertPlayer = async ({ body }: Request) => {
-    const { url } = body;
+    const { url: receivedUrl } = body;
 
-    this.validateUrl(url);
+    const [platformPlayerId, url] = validateAndReturnUrlAndId(
+      receivedUrl,
+      this.baseUrl,
+      this.playerUrl
+    );
+
+    const hasPlayer = await PlayerRepository.findOne(platformPlayerId);
+
+    if (hasPlayer)
+      throw new UniqueKeyError(undefined, undefined, {
+        player: "A player with that platform id has already been registered.",
+      });
 
     const page = await this.puppeteer.launchPage(url);
 
-    const playerInfo = await this.platformService.playerInfo(page, url);
+    const playerInfo = await this.platformService.playerInfo(
+      page,
+      platformPlayerId
+    );
 
     const player = await AppDataSource.transaction(async (entityManager) => {
       const platform = await this.getOrCreatePlatform(
@@ -49,7 +67,7 @@ class PlayerService {
       const platformCredentials = await entityManager.save(
         PlatformCredentials,
         {
-          platformNames: [platform],
+          platformNames: platform,
           platformPlayerId: playerInfo.platformPlayerId,
         }
       );

@@ -15,14 +15,14 @@ class CSGOStats extends CSGOStatsBase {
   ): Promise<IMatchPlayerInfo> => {
     this.$ = await this.matchInfoClass.content(page);
     this.match = await this.matchInfoClass.matchDetails(url);
-    const players = await this.matchInfoClass.teamDetails();
+    this.players = await this.matchInfoClass.teamDetails();
 
-    return { match: this.match, players };
+    return { match: this.match, players: this.players };
   };
 
-  playerInfo = async (page: Page, url: string): Promise<IPlayer> => {
+  playerInfo = async (page: Page, playerId: string): Promise<IPlayer> => {
     this.$ = await this.playerInfoClass.content(page);
-    const playerInfo = await this.playerInfoClass.playerDetails(url);
+    const playerInfo = await this.playerInfoClass.playerDetails(playerId);
 
     return playerInfo;
   };

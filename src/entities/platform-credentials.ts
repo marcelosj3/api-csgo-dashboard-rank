@@ -1,4 +1,5 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+
 import { Platform } from "./platform.entity";
 import { Player } from "./player.entity";
 
@@ -7,12 +8,14 @@ export class PlatformCredentials {
   @PrimaryGeneratedColumn("uuid")
   readonly platformCredentialsId?: string;
 
-  @Column()
+  @Column({ unique: true })
   platformPlayerId: string;
 
-  @OneToMany(() => Platform, (platform) => platform.platformCredentials)
-  platformNames: Platform[];
+  @ManyToOne(() => Platform, (platform) => platform.platformCredentials)
+  platformNames: Platform;
 
-  @OneToMany(() => Player, (player) => player.platformCredentials)
-  players: Player[];
+  @ManyToOne(() => Player, (player) => player.platformCredentials, {
+    onDelete: "CASCADE",
+  })
+  players: Player;
 }

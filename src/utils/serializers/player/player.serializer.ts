@@ -5,7 +5,7 @@ import { platformCredentialsSerializer } from "../platform-credentials";
 
 export const playerSerializer = (player: Player): IPlayerSerializer => {
   return {
-    playerId: player.playerId!,
+    playerId: player.playerId,
     player: player.name,
     imageUrl: player.imageUrl,
     platformCredentials: player.platformCredentials.map((platformCredentials) =>

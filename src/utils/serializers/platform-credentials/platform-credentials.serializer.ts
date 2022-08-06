@@ -5,7 +5,7 @@ export const platformCredentialsSerializer = (
   platformCredentials: PlatformCredentials
 ): IPlatformCredentialsSerializer => {
   return {
-    platformName: platformCredentials.platformNames[0].name,
+    platformName: platformCredentials.platformNames.name,
     platformPlayerId: platformCredentials.platformPlayerId,
   };
 };
