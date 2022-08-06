@@ -15,6 +15,7 @@ import { IScoreboard } from "../interfaces";
 import { MatchRepository, PlayerRepository } from "../repositories";
 import {
   matchSerializer,
+  pageOr404,
   Puppeteer,
   validateAndReturnUrlAndId,
 } from "../utils";
@@ -69,7 +70,7 @@ class MatchService {
         match: "A match with that id was already registered.",
       });
 
-    const page = await this.puppeteer.launchPage(url);
+    const page = await pageOr404(url, this.puppeteer, "match");
 
     const matchInfo = await this.platformService.createMatchInfo(page, url);
 

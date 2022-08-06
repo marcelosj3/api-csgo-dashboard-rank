@@ -10,4 +10,4 @@ export {
   playerSerializer,
 } from "./serializers";
 
-export { validateAndReturnUrlAndId } from "./services";
+export { pageOr404, validateAndReturnUrlAndId } from "./services";

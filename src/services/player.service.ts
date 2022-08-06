@@ -8,6 +8,7 @@ import { NotFoundError, UniqueKeyError } from "../errors";
 import { PlayerRepository } from "../repositories";
 import { TPage, TPuppeteer } from "../types";
 import {
+  pageOr404,
   playerSerializer,
   Puppeteer,
   validateAndReturnUrlAndId,
@@ -36,21 +37,6 @@ class PlayerService {
     return platform;
   };
 
-  pageOr404 = async (url: string): Promise<TPage> => {
-    const page = await this.puppeteer.launchPage(url);
-
-    const content = await this.platformService.content(page);
-
-    const has404 = content("h1").text().includes("404");
-
-    if (has404) {
-      this.puppeteer.close();
-      throw new NotFoundError("player");
-    }
-
-    return page;
-  };
-
   insertPlayer = async ({ body }: Request) => {
     const { url: receivedUrl } = body;
 
@@ -70,7 +56,7 @@ class PlayerService {
         error: "A player with that platform id has already been registered.",
       });
 
-    const page = await this.pageOr404(url);
+    const page = await pageOr404(url, this.puppeteer, "player");
 
     const playerInfo = await this.platformService.playerInfo(
       page,
