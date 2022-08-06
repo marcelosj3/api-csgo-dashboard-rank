@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/marcelosj3/csgodashboardrank/compare/v1.4.0...v1.4.1) (2022-08-06)
+
+
+### Bug Fixes
+
+* remove logs that were fetching a undefined property ([7dfc06a](https://github.com/marcelosj3/csgodashboardrank/commit/7dfc06a7e9c4ddcbb44e580418f3994009aadd23))
+
 ## [1.4.0](https://github.com/marcelosj3/csgodashboardrank/compare/v1.3.0...v1.4.0) (2022-08-06)
 
 
