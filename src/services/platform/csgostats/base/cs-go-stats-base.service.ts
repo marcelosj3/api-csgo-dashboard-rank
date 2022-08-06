@@ -1,22 +1,11 @@
-import { CheerioAPI, load } from "cheerio";
-
 import { PlatformNames } from "../../../../enums";
-import { IMatchDetails, IPlayerMatchInfo } from "../../../../interfaces";
-import { Page } from "../../../../utils";
+import { PlatformBase } from "../../base";
 
-export class CSGOStatsBase {
+export class CSGOStatsBase extends PlatformBase {
   platform: PlatformNames = PlatformNames.CSGOSTATS;
-  match: IMatchDetails;
-  players: IPlayerMatchInfo[];
-  $: CheerioAPI;
-
-  content = async (page: Page) => {
-    const rawContent = await page.content();
-    const content = load(rawContent);
-
-    this.$ = content;
-    return this.$;
-  };
+  baseUrl: string = "https://csgostats.gg";
+  playerUrlEndpoint: string = "/player/";
+  matchUrlEndpoint: string = "/match/";
 
   dateHandler = (date: string) => {
     let [day, month, year, time] = date.split(" ");
@@ -32,11 +21,5 @@ export class CSGOStatsBase {
     );
 
     return matchDate;
-  };
-
-  normalizeArrayToObject = <T>(array: Partial<T | undefined>[]): T => {
-    return array
-      .filter((element) => element)
-      .reduce((acc, value) => Object.assign(acc!, value), {})! as T;
   };
 }

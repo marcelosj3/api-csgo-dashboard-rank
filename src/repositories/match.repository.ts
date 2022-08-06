@@ -12,7 +12,21 @@ class MatchRepository {
 
   create = (match: Match) => this.repo.create(match);
 
-  findAll = () => this.repo.find({ relations: ["platform", "scoreboard"] });
+  findAll = (players = false) => {
+    if (players)
+      return this.repo.find({
+        relations: [
+          "platform",
+          "scoreboard",
+          "playerMatches",
+          "playerMatches.player",
+          "playerMatches.player.platformCredentials",
+          "playerMatches.player.platformCredentials.platform",
+        ],
+      });
+
+    return this.repo.find({ relations: ["platform", "scoreboard"] });
+  };
 
   findOne = (platformMatchId: string) =>
     this.repo.findOne({ where: { platformMatchId } });

@@ -1,6 +1,6 @@
-import { PlatformNames } from "../../enums";
+import { PlatformNames } from "../../../enums";
 
 export interface IPlatformCredentialsSerializer {
-  platformName: PlatformNames;
+  platform: PlatformNames;
   platformPlayerId: string;
 }

@@ -1,6 +1,5 @@
-export { Puppeteer, Page } from "./puppeteer";
-export {
-  matchSerializer,
-  platformCredentialsSerializer,
-  playerSerializer,
-} from "./serializers";
+export { capitalize } from "./generics";
+
+export { Puppeteer } from "./puppeteer";
+
+export { pageOr404, validateAndReturnUrlAndId } from "./services";

@@ -2,6 +2,7 @@ import { Repository } from "typeorm";
 
 import { AppDataSource } from "../data-source";
 import { Player } from "../entities";
+import { PlatformNames } from "../enums";
 
 class PlayerRepository {
   private repo: Repository<Player>;
@@ -12,11 +13,23 @@ class PlayerRepository {
 
   create = (Player: Player) => this.repo.create(Player);
 
-  findAll = () => this.repo.find({});
+  findAll = (plaftormCredentials = false) => {
+    if (plaftormCredentials)
+      return this.repo.find({
+        relations: ["platformCredentials", "platformCredentials.platform"],
+      });
 
-  findOne = (platformPlayerId: string) =>
+    return this.repo.find({});
+  };
+
+  findOne = (platformPlayerId: string, platformName: PlatformNames) =>
     this.repo.findOne({
-      where: { platformCredentials: { platformPlayerId } },
+      where: {
+        platformCredentials: {
+          platformPlayerId,
+          platform: { name: platformName },
+        },
+      },
     });
 
   save = async (Player: Player) => await this.repo.save(Player);

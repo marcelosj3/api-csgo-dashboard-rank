@@ -1,4 +1,5 @@
 import { PlatformNames } from "../../enums";
+
 import { IScoreboard } from "./scoreboard.interface";
 
 export interface IMatchDetails {

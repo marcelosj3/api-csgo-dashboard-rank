@@ -4,15 +4,21 @@ import { EntityManager } from "typeorm";
 import { AppDataSource } from "../data-source";
 import { Platform, PlatformCredentials, Player } from "../entities";
 import { PlatformNames } from "../enums";
-import { InvalidUrlError } from "../errors";
-import { playerSerializer, Puppeteer } from "../utils";
+import { UniqueKeyError } from "../errors";
+import { PlayerRepository } from "../repositories";
+import { playerSerializer } from "../serializers";
+import { TPuppeteer } from "../types";
+import { pageOr404, Puppeteer, validateAndReturnUrlAndId } from "../utils";
 
 import { CSGOStats } from "./platform";
 
 class PlayerService {
-  private puppeteer = Puppeteer;
+  private puppeteer: TPuppeteer = Puppeteer;
+  // TODO when defining a new platform, create a logic
+  // to redefine these variables
   private platformService = CSGOStats;
-  private baseUrl = "csgostats.gg/player/";
+  private baseUrl: string = CSGOStats.baseUrl;
+  private playerUrl: string = CSGOStats.playerUrlEndpoint;
 
   getOrCreatePlatform = async (
     name: PlatformNames,
@@ -27,18 +33,32 @@ class PlayerService {
     return platform;
   };
 
-  validateUrl = (url: string) => {
-    if (!url.includes(this.baseUrl)) throw new InvalidUrlError();
-  };
-
   insertPlayer = async ({ body }: Request) => {
-    const { url } = body;
+    const { url: receivedUrl } = body;
 
-    this.validateUrl(url);
+    const [platformPlayerId, url] = validateAndReturnUrlAndId(
+      receivedUrl,
+      this.baseUrl,
+      this.playerUrl
+    );
 
-    const page = await this.puppeteer.launchPage(url);
+    const hasPlatformPlayer = await PlayerRepository.findOne(
+      platformPlayerId,
+      this.platformService.platform
+    );
 
-    const playerInfo = await this.platformService.playerInfo(page, url);
+    if (hasPlatformPlayer)
+      throw new UniqueKeyError(undefined, undefined, {
+        error: "A player with that platform id has already been registered.",
+      });
+
+    const page = await pageOr404(url, this.puppeteer, "player");
+
+    const playerInfo = await this.platformService.playerInfo(
+      page,
+      platformPlayerId,
+      this.puppeteer
+    );
 
     const player = await AppDataSource.transaction(async (entityManager) => {
       const platform = await this.getOrCreatePlatform(
@@ -49,7 +69,7 @@ class PlayerService {
       const platformCredentials = await entityManager.save(
         PlatformCredentials,
         {
-          platformNames: [platform],
+          platform: platform,
           platformPlayerId: playerInfo.platformPlayerId,
         }
       );
@@ -67,11 +87,21 @@ class PlayerService {
       return await entityManager.save(Player, player);
     });
 
-    await this.puppeteer.close();
-
     const playerSerialized = playerSerializer(player);
 
     return { status: 200, message: playerSerialized };
+  };
+
+  getAll = async ({ query }: Request) => {
+    const platformCredentials = query.hasOwnProperty("platform_credentials");
+
+    const players = await PlayerRepository.findAll(platformCredentials);
+
+    const serializedPlayers = players.map((player) =>
+      playerSerializer(player, platformCredentials)
+    );
+
+    return { status: 200, message: serializedPlayers };
   };
 }
 

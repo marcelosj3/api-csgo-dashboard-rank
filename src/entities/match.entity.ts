@@ -16,16 +16,16 @@ export class Match {
   @PrimaryGeneratedColumn("uuid")
   readonly matchId?: string;
 
-  @Column({ nullable: false, unique: true })
+  @Column()
   platformMatchId: string;
 
-  @Column({ nullable: false })
+  @Column()
   date: Date;
 
-  @Column({ nullable: false })
+  @Column()
   mapName: string;
 
-  @Column({ nullable: false })
+  @Column()
   matchUrl: string;
 
   @ManyToOne(() => Scoreboard, (scoreboard) => scoreboard.matches, {
