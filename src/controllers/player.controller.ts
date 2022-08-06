@@ -6,6 +6,11 @@ class PlayerController {
     const { status, message } = await PlayerService.insertPlayer(req);
     return res.status(status).json(message);
   };
+
+  getAll = async (req: Request, res: Response) => {
+    const { status, message } = await PlayerService.getAll(req);
+    return res.status(status).json(message);
+  };
 }
 
 export default new PlayerController();

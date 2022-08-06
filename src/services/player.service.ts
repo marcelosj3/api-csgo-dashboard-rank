@@ -91,6 +91,18 @@ class PlayerService {
 
     return { status: 200, message: playerSerialized };
   };
+
+  getAll = async ({ query }: Request) => {
+    const platformCredentials = query.hasOwnProperty("platform_credentials");
+
+    const players = await PlayerRepository.findAll(platformCredentials);
+
+    const serializedPlayers = players.map((player) =>
+      playerSerializer(player, platformCredentials)
+    );
+
+    return { status: 200, message: serializedPlayers };
+  };
 }
 
 export default new PlayerService();

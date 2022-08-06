@@ -13,7 +13,14 @@ class PlayerRepository {
 
   create = (Player: Player) => this.repo.create(Player);
 
-  findAll = () => this.repo.find({});
+  findAll = (plaftormCredentials = false) => {
+    if (plaftormCredentials)
+      return this.repo.find({
+        relations: ["platformCredentials", "platformCredentials.platform"],
+      });
+
+    return this.repo.find({});
+  };
 
   findOne = (platformPlayerId: string, platformName: PlatformNames) =>
     this.repo.findOne({
