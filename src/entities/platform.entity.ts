@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 import { PlatformNames } from "../enums";
 
@@ -16,13 +10,13 @@ export class Platform {
   @PrimaryGeneratedColumn("uuid")
   readonly platformId?: string;
 
-  @Column({ nullable: false })
+  @Column()
   name: PlatformNames;
 
   @OneToMany(() => Match, (match) => match.platform)
   matches: Match[];
 
-  @ManyToOne(
+  @OneToMany(
     () => PlatformCredentials,
     (platformCredentials) => platformCredentials.platformCredentialsId
   )

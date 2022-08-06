@@ -8,7 +8,7 @@ export class InvalidUrlError extends AppError {
     super(message, statusCode);
     this.statusCode = statusCode;
     if (message === "") {
-      this.message = { error: "Invalid url received" };
+      this.message = { error: "Invalid url received." };
     } else {
       this.message = message;
     }

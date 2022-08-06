@@ -7,10 +7,10 @@ export class Scoreboard {
   @PrimaryGeneratedColumn("uuid")
   readonly scoreboardId?: string;
 
-  @Column({ type: "int", nullable: false })
+  @Column({ type: "int" })
   team1Rounds: number;
 
-  @Column({ type: "int", nullable: false })
+  @Column({ type: "int" })
   team2Rounds: number;
 
   @OneToMany(() => Match, (match) => match.scoreboard)

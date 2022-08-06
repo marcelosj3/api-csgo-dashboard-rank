@@ -10,17 +10,19 @@ import {
   Scoreboard,
 } from "../entities";
 import { PlatformNames } from "../enums";
-import { InvalidUrlError, UniqueKeyError } from "../errors";
+import { UniqueKeyError } from "../errors";
 import { IScoreboard } from "../interfaces";
 import { MatchRepository, PlayerRepository } from "../repositories";
-import { matchSerializer, Puppeteer } from "../utils";
+import { matchSerializer } from "../serializers";
+import { pageOr404, Puppeteer, validateAndReturnUrlAndId } from "../utils";
 
 import { CSGOStats } from "./platform";
 
 class MatchService {
   private puppeteer = Puppeteer;
   private platformService = CSGOStats;
-  private baseUrl = "csgostats.gg/match/";
+  private baseUrl: string = CSGOStats.baseUrl;
+  private matchUrl: string = CSGOStats.matchUrlEndpoint;
 
   getOrCreatePlatform = async (
     name: PlatformNames,
@@ -48,21 +50,15 @@ class MatchService {
     return scoreboard;
   };
 
-  validateUrl = (url: string) => {
-    if (!url.includes(this.baseUrl)) throw new InvalidUrlError();
-  };
-
-  // TODO merge this method with others that do the same function
-  getIdFromUrl = (url: string) => {
-    return url.split("/").slice(-1)[0];
-  };
-
   handleMatch = async ({ body }: Request) => {
-    const { url } = body;
+    const { url: urlReceived } = body;
 
-    this.validateUrl(url);
+    const [matchId, url] = validateAndReturnUrlAndId(
+      urlReceived,
+      this.baseUrl,
+      this.matchUrl
+    );
 
-    const matchId = this.getIdFromUrl(url);
     const matchExists = await MatchRepository.findOne(matchId);
 
     if (matchExists)
@@ -70,7 +66,7 @@ class MatchService {
         match: "A match with that id was already registered.",
       });
 
-    const page = await this.puppeteer.launchPage(url);
+    const page = await pageOr404(url, this.puppeteer, "match");
 
     const matchInfo = await this.platformService.createMatchInfo(page, url);
 
@@ -95,7 +91,8 @@ class MatchService {
       const playerMatchesArray = Promise.all(
         matchInfo.players.map(async (playerDetails) => {
           const player = await PlayerRepository.findOne(
-            playerDetails.playerInfo.platformPlayerId
+            playerDetails.playerInfo.platformPlayerId,
+            this.platformService.platform
           );
 
           if (!player) return undefined;
