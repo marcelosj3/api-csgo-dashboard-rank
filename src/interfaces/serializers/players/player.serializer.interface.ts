@@ -4,5 +4,5 @@ export interface IPlayerSerializer {
   playerId: string;
   player: string;
   imageUrl: string;
-  platformCredentials: IPlatformCredentialsSerializer[];
+  platformCredentials?: IPlatformCredentialsSerializer[];
 }

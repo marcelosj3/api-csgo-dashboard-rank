@@ -3,13 +3,19 @@ import { IPlayerSerializer } from "../../interfaces";
 
 import { platformCredentialsSerializer } from "../platform-credentials";
 
-export const playerSerializer = (player: Player): IPlayerSerializer => {
+export const playerSerializer = (
+  player: Player,
+  platformCredentials: boolean = true
+): IPlayerSerializer => {
   return {
     playerId: player.playerId,
     player: player.name,
     imageUrl: player.imageUrl,
-    platformCredentials: player.platformCredentials.map((platformCredentials) =>
-      platformCredentialsSerializer(platformCredentials)
-    ),
+
+    platformCredentials: platformCredentials
+      ? player.platformCredentials.map((platformCredentials) =>
+          platformCredentialsSerializer(platformCredentials)
+        )
+      : undefined,
   };
 };

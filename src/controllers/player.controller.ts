@@ -8,7 +8,7 @@ class PlayerController {
   };
 
   getAll = async (req: Request, res: Response) => {
-    const { status, message } = await PlayerService.getAll();
+    const { status, message } = await PlayerService.getAll(req);
     return res.status(status).json(message);
   };
 }
