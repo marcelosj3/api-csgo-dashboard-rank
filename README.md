@@ -55,8 +55,9 @@ HTTP: 200 - OK
 }
 ```
 
-<details>
-<summary style="font-size:20px;font-weight:bold;color:black">Errors<a id="errors-players"></summary></a>
+####Errors
+<a id="errors-players"></a>
+
 <a id="register-player-with-incorrect-url"></a>
 <details>
 <summary>Register a player with an incorrect url</summary>
@@ -81,7 +82,7 @@ HTTP: 400 - BAD REQUEST
 }
 ```
 </details>
-</details>
+
 
 ---
 ## <center>**Matches** <a id="matches"></a></center>
@@ -144,8 +145,9 @@ HTTP: 200 - OK
   ]
 }
 ```
-<details>
-<summary style="font-size:20px;font-weight:bold;color:black">Errors</summary><a id="errors-matches"></a>
+
+####Errors
+<a id="errors-matches"></a>
 
 <a id="register-match-with-incorrect-url"></a>
 <details>
@@ -196,14 +198,14 @@ HTTP: 409 - CONFLICT
 }
 ```
 </details>
-</details>
+
 
 ---
 ## <center>**Ranks** <a id="ranks"></a></center>
 ---
 
-<details>
-<summary style="font-size:28px;font-weight:bold;color:black">Kills</summary>
+
+###Kills
 <a id="rank-kills-sorted"></a>
 
 
@@ -252,8 +254,8 @@ HTTP: 200 - OK
 ]
 ```
 
-<details>
-<summary style="font-size:20px;font-weight:bold;color:black">Query params</summary> <a id="query-params"></a>
+
+**Query params**<a id="query-params"></a>
 
 <details>
 <a id="rank-kills-match_url"></a>
@@ -308,6 +310,5 @@ HTTP: 200 - OK
 ]
 ```
 </details>
-</details>
-</details>
+
 
