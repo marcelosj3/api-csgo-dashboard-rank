@@ -7,13 +7,22 @@
 ## Summary
 - [Players](#players)
   - [Register players](#register-players)
+  - [Register a player with an params](#player-parms)
+  - [Register a player without an http](#player-http)
   - [Errors](#errors-players)
     - [Register a player with an incorrect url](#register-player-with-incorrect-url)
+    - [Register a already existing player](#player-added)
+    - [Register a player that was not found](#player-found)
+  - [Display all registered players](#display-players)
 - [Matches](#matches) 
   - [Register matches](#register-matches)
+  - [Register a match with an params](#match-parms)
+  - [Register a match without an http](#match-http)
   - [Errors](#errors-matches)
     - [Register match with an incorrect url](#register-match-with-incorrect-url)
     - [Register an already existing match](#register-already-match)
+    - [Register a match that was not found](#match-found)
+  - [Display all registered matches](#display-match)
 - [Ranks](#ranks)
   - [Kills](#rank-kills-sorted)
     - [Query params](#query-params)
@@ -54,9 +63,67 @@ HTTP: 200 - OK
  ]
 }
 ```
+<a id='player-parms'></a>
+<details>
+<summary>Register a player with an params</summary>
 
-####Errors
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/player/76561198070867450#asdasd"
+}
+```
+
+**Response:**
+```
+HTTP: 409 - CONFLICT
+```
+```json
+{
+  "playerId": "850fde80-8231-452t-b39c-f9b23695385a",
+  "player": "SK|Blavold",
+  "imageUrl": "https://avatars.akamai.steamstatic.com/e66064d13f75fe43da64fce740ac29a217f9fd6a_full.jpg",
+  "platformCredentials": [
+  {
+    "platformName": "CSGOSTATS",
+    "platformPlayerId": "76561198062653475"
+  }
+ ]
+}
+```
+</details>
+
+<a id="player-http"></a>
+<details>
+<summary>Register a player without an http</summary>
+
+**Body:**
+```json
+{
+  "url": "csgostats.gg/player/76561198078984994/esea"
+}
+```
+**Response:**
+```
+HTTP: 409 - CONFLICT
+```
+```json
+{
+  "playerId": "850fde80-8231-452t-b39c-f9b23695385a",
+  "player": "SK|Blavold",
+  "imageUrl": "https://avatars.akamai.steamstatic.com/e66064d13f75fe43da64fce740ac29a217f9fd6a_full.jpg",
+  "platformCredentials": [
+  {
+    "platformName": "CSGOSTATS",
+    "platformPlayerId": "76561198062653475"
+  }
+ ]
+}
+```
+</details>
+
 <a id="errors-players"></a>
+**Errors**
 
 <a id="register-player-with-incorrect-url"></a>
 <details>
@@ -83,6 +150,92 @@ HTTP: 400 - BAD REQUEST
 ```
 </details>
 
+<a id="player-added"></a>
+<details>
+<summary>Register a already existing player</summary>
+
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/player/76561198070867450"
+}
+```
+**Response:**
+```
+HTTP: 409 - CONFLICT
+```
+```json
+{
+  "status": "error",
+  "code": 409,
+  "message": {
+  "error": "A player with that platform id has already been registered."
+  }
+}
+```
+</details>
+
+<a id="player-found"></a>
+<details>
+<summary>Register a player that was not found</summary>
+
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/player/9999999999999999999#adads"
+}
+```
+**Response:**
+```
+HTTP: 404 - NOT FOUND
+```
+```json
+{
+  "status": "error",
+  "code": 404,
+  "message": {
+  "error": "Player not found."
+  }
+}
+```
+
+</details>
+
+<a id="display-players"></a>
+**Display players**
+
+<details>
+<summary>Display all registered players</summary>
+
+```
+GET - /api/players/
+```
+
+**Responde:**
+```
+HTTP: 200 - OK
+```
+```json
+[
+  {
+    "playerId": "76561198070867450",
+    "player": "marcelosj",
+    "imageUrl": "https://avatars.akamai.steamstatic.com/23077149f02c6225f07f658380aa7fc364fa701f_full.jpg"
+  },
+  {
+    "playerId": "76561198062653475",
+    "player": "SK|Blavold",
+    "imageUrl": "https://avatars.akamai.steamstatic.com/e66064d13f75fe43da64fce740ac29a217f9fd6a_full.jpg"
+  },
+  {
+    "playerId": "76561198034937219",
+    "player": "HeavyFire",
+    "imageUrl": "https://avatars.akamai.steamstatic.com/721c61c6b88439322fccf27f13e697d9eeaf73da_full.jpg"
+  }
+]
+```
+
+</details>
 
 ---
 ## <center>**Matches** <a id="matches"></a></center>
@@ -146,8 +299,76 @@ HTTP: 200 - OK
 }
 ```
 
-####Errors
+<a id="match-parms"></a>
+<details>
+<summary>Register a match with an params</summary>
+
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/match/73079030#asdasd"
+}
+```
+
+**Response:**
+```
+HTTP: 200 - OK
+```
+```json
+{
+  "platformMatchId": "73079030",
+  "platform": "CSGOSTATS",
+  "matchUrl": "https://csgostats.gg/match/73079030",
+  "mapName": "de_inferno",
+  "date": "2022-07-23T22:43:18.000Z",
+  "scoreboard": {
+    "team1Rounds": 4,
+    "team2Rounds": 9
+  },
+  "players": []
+}
+```
+
+</details>
+
+
+<a id="match-http"></a>
+<details>
+<summary>Register a match without an http</summary>
+
+**Body:**
+```json
+{
+  "url": "csgostats.gg/match/73179029/esea"
+}
+```
+
+**response:**
+```
+HTTP: 200 - OK
+```
+```json
+{
+  "platformMatchId": "73179029",
+  "platform": "CSGOSTATS",
+  "matchUrl": "https://csgostats.gg/match/73179029",
+  "mapName": "de_mirage",
+  "date": "2022-07-24T17:31:02.000Z",
+  "scoreboard": {
+    "team1Rounds": 10,
+    "team2Rounds": 16
+  },
+  "players": []
+}
+```
+
+
+
+</details>
+
 <a id="errors-matches"></a>
+**Errors**
+
 
 <a id="register-match-with-incorrect-url"></a>
 <details>
@@ -199,6 +420,85 @@ HTTP: 409 - CONFLICT
 ```
 </details>
 
+
+<a id="match-found"></a>
+<details>
+<summary>Register a match that was not found</summary>
+
+**Body:**
+```json
+{
+  "url": "https://csgostats.gg/match/999999999"
+}
+```
+
+**Response:**
+```
+HTTP: 404 - NOT FOUND
+```
+```Json
+{
+  "status": "error",
+  "code": 404,
+  "message": {
+    "error": "Match not found."
+  }
+}
+```
+
+</details>
+
+
+<a id="display-match"></a>
+**Display matches**
+
+<details>
+<summary>Display all registered matches</summary>
+
+```
+GET - /api/matches/
+```
+
+**Response:**
+
+```json
+[
+  {
+    "platformMatchId": "73079023",
+    "platform": "CSGOSTATS",
+    "matchUrl": "https://csgostats.gg/match/73079023",
+    "mapName": "de_inferno",
+    "date": "2022-07-24T00:42:30.000Z",
+    "scoreboard": {
+      "team1Rounds": 16,
+      "team2Rounds": 12
+    }
+  },
+  {
+    "platformMatchId": "73434211",
+    "platform": "CSGOSTATS",
+    "matchUrl": "https://csgostats.gg/match/73434211",
+    "mapName": "de_mirage",
+    "date": "2022-07-28T01:44:59.000Z",
+    "scoreboard": {
+      "team1Rounds": 13,
+      "team2Rounds": 16
+    }
+  },
+  {
+    "platformMatchId": "73079032",
+    "platform": "CSGOSTATS",
+    "matchUrl": "https://csgostats.gg/match/73079032",
+    "mapName": "de_ancient",
+    "date": "2022-07-24T07:25:18.000Z",
+    "scoreboard": {
+      "team1Rounds": 5,
+      "team2Rounds": 16
+    }
+  }
+]
+```
+</details>
 
 ---
 ## <center>**Ranks** <a id="ranks"></a></center>
