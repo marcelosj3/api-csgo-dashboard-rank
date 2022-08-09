@@ -139,7 +139,7 @@ HTTP: 404 - NOT FOUND
 
 <a id="players-display"></a>
 
-###Display players
+### Display players
 
 
 Display all registered players
@@ -323,7 +323,7 @@ HTTP: 404 - NOT FOUND
 
 <a id="matches-display"></a>
 
-###Display matches
+### Display matches
 
 Display all registered matches
 
@@ -377,7 +377,7 @@ GET - /api/matches/
 
 <a id="ranks-kills"></a>
 
-###Kills
+### Kills
 
 Display the number of kills from the higher to the lower amount
 
