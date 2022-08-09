@@ -6,33 +6,22 @@
 ---
 ## Summary
 - [Players](#players)
-  - [Register players](#register-players)
-  - [Register a player with an params](#player-parms)
-  - [Register a player without an http](#player-http)
-  - [Errors](#errors-players)
-    - [Register a player with an incorrect url](#register-player-with-incorrect-url)
-    - [Register a already existing player](#player-added)
-    - [Register a player that was not found](#player-found)
-  - [Display all registered players](#display-players)
+  - [Register players](#players-register)
+    - [Errors](#players-register-errors)
+  - [Display players](#players-display)
 - [Matches](#matches) 
-  - [Register matches](#register-matches)
-  - [Register a match with an params](#match-parms)
-  - [Register a match without an http](#match-http)
-  - [Errors](#errors-matches)
-    - [Register match with an incorrect url](#register-match-with-incorrect-url)
-    - [Register an already existing match](#register-already-match)
-    - [Register a match that was not found](#match-found)
-  - [Display all registered matches](#display-match)
+  - [Register matches](#matches-register)
+    - [Errors](#matches-register-errors)
+  - [Display matches](#matches-display)
 - [Ranks](#ranks)
-  - [Kills](#rank-kills-sorted)
-    - [Query params](#query-params)
-      - [Display all kills with match url](#rank-kills-match_url)
+  - [Kills](#ranks-kills)
+    - [Query params](#ranks-kills-query-params)
 
 ---
 ## <center>**Players** <a id="players"></a></center>
 ---
 
-### Register players <a id="register-players"></a>
+### Register players <a id="players-register"></a>
 
 ```
 POST - /api/players/
@@ -63,67 +52,11 @@ HTTP: 200 - OK
  ]
 }
 ```
-<a id='player-parms'></a>
+
+<a id="players-register-errors"></a>
 <details>
-<summary>Register a player with an params</summary>
 
-**Body:**
-```json
-{
-  "url": "https://csgostats.gg/player/76561198070867450#asdasd"
-}
-```
-
-**Response:**
-```
-HTTP: 409 - CONFLICT
-```
-```json
-{
-  "playerId": "850fde80-8231-452t-b39c-f9b23695385a",
-  "player": "SK|Blavold",
-  "imageUrl": "https://avatars.akamai.steamstatic.com/e66064d13f75fe43da64fce740ac29a217f9fd6a_full.jpg",
-  "platformCredentials": [
-  {
-    "platformName": "CSGOSTATS",
-    "platformPlayerId": "76561198062653475"
-  }
- ]
-}
-```
-</details>
-
-<a id="player-http"></a>
-<details>
-<summary>Register a player without an http</summary>
-
-**Body:**
-```json
-{
-  "url": "csgostats.gg/player/76561198078984994/esea"
-}
-```
-**Response:**
-```
-HTTP: 409 - CONFLICT
-```
-```json
-{
-  "playerId": "850fde80-8231-452t-b39c-f9b23695385a",
-  "player": "SK|Blavold",
-  "imageUrl": "https://avatars.akamai.steamstatic.com/e66064d13f75fe43da64fce740ac29a217f9fd6a_full.jpg",
-  "platformCredentials": [
-  {
-    "platformName": "CSGOSTATS",
-    "platformPlayerId": "76561198062653475"
-  }
- ]
-}
-```
-</details>
-
-<a id="errors-players"></a>
-**Errors**
+<summary>Errors</summary>
 
 <a id="register-player-with-incorrect-url"></a>
 <details>
@@ -200,12 +133,14 @@ HTTP: 404 - NOT FOUND
 ```
 
 </details>
+</details>
 
-<a id="display-players"></a>
-**Display players**
+---
+<a id="players-display"></a>
+###Display players
 
-<details>
-<summary>Display all registered players</summary>
+
+Display all registered players
 
 ```
 GET - /api/players/
@@ -235,12 +170,10 @@ HTTP: 200 - OK
 ]
 ```
 
-</details>
-
 ---
 ## <center>**Matches** <a id="matches"></a></center>
 ---
-### Register matches <a id="register-matches"></a>
+### Register matches <a id="matches-register"></a>
 
 ```
 POST - /api/matches/
@@ -299,75 +232,10 @@ HTTP: 200 - OK
 }
 ```
 
-<a id="match-parms"></a>
+
+<a id="matches-register-errors"></a>
 <details>
-<summary>Register a match with an params</summary>
-
-**Body:**
-```json
-{
-  "url": "https://csgostats.gg/match/73079030#asdasd"
-}
-```
-
-**Response:**
-```
-HTTP: 200 - OK
-```
-```json
-{
-  "platformMatchId": "73079030",
-  "platform": "CSGOSTATS",
-  "matchUrl": "https://csgostats.gg/match/73079030",
-  "mapName": "de_inferno",
-  "date": "2022-07-23T22:43:18.000Z",
-  "scoreboard": {
-    "team1Rounds": 4,
-    "team2Rounds": 9
-  },
-  "players": []
-}
-```
-
-</details>
-
-
-<a id="match-http"></a>
-<details>
-<summary>Register a match without an http</summary>
-
-**Body:**
-```json
-{
-  "url": "csgostats.gg/match/73179029/esea"
-}
-```
-
-**response:**
-```
-HTTP: 200 - OK
-```
-```json
-{
-  "platformMatchId": "73179029",
-  "platform": "CSGOSTATS",
-  "matchUrl": "https://csgostats.gg/match/73179029",
-  "mapName": "de_mirage",
-  "date": "2022-07-24T17:31:02.000Z",
-  "scoreboard": {
-    "team1Rounds": 10,
-    "team2Rounds": 16
-  },
-  "players": []
-}
-```
-
-
-
-</details>
-
-<a id="errors-matches"></a>
-**Errors**
+<summary>Errors</summary>
 
 
 <a id="register-match-with-incorrect-url"></a>
@@ -447,13 +315,13 @@ HTTP: 404 - NOT FOUND
 ```
 
 </details>
+</details>
 
+---
+<a id="matches-display"></a>
+###Display matches
 
-<a id="display-match"></a>
-**Display matches**
-
-<details>
-<summary>Display all registered matches</summary>
+Display all registered matches
 
 ```
 GET - /api/matches/
@@ -498,7 +366,6 @@ GET - /api/matches/
   }
 ]
 ```
-</details>
 
 ---
 ## <center>**Ranks** <a id="ranks"></a></center>
@@ -506,7 +373,7 @@ GET - /api/matches/
 
 
 ###Kills
-<a id="rank-kills-sorted"></a>
+<a id="ranks-kills"></a>
 
 
 Display the number of kills from the higher to the lower amount
@@ -554,11 +421,13 @@ HTTP: 200 - OK
 ]
 ```
 
+<a id="ranks-kills-query-params"></a>
+<details>
+<summary>Query params</summary>
 
-**Query params**<a id="query-params"></a>
 
 <details>
-<a id="rank-kills-match_url"></a>
+<a id="rank-kills-match-url"></a>
 <summary>Display all kills with match url</summary>
 
 ```
@@ -610,5 +479,5 @@ HTTP: 200 - OK
 ]
 ```
 </details>
-
+</details>
 
