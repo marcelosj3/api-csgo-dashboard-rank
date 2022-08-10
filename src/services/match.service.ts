@@ -75,9 +75,11 @@ class MatchService {
     const matchExists = await MatchRepository.findOne(matchId);
 
     if (matchExists)
-      throw new UniqueKeyError(undefined, undefined, {
-        match: "A match with that id was already registered.",
-      });
+      throw new UniqueKeyError(
+        undefined,
+        undefined,
+        "A match with that id was already registered."
+      );
 
     const page = await pageOr404(url, this.puppeteer, "match");
 

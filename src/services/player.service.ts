@@ -48,9 +48,11 @@ class PlayerService {
     );
 
     if (hasPlatformPlayer)
-      throw new UniqueKeyError(undefined, undefined, {
-        error: "A player with that platform id has already been registered.",
-      });
+      throw new UniqueKeyError(
+        undefined,
+        undefined,
+        "A player with that platform id has already been registered."
+      );
 
     const page = await pageOr404(url, this.puppeteer, "player");
 

@@ -12,10 +12,12 @@ export class UniqueKeyError extends AppError {
   ) {
     super(message, statusCode);
     this.statusCode = statusCode;
-    if (message === "") {
+    if (message === "" && key !== "" && value !== "") {
       this.message = { error: `Key (${key})=(${value}) already exists.` };
+    } else if (message === "" && key !== "" && value === "") {
+      this.message = { error: `Key '${key}' already exists.` };
     } else {
-      this.message = message;
+      this.message = { error: message };
     }
   }
 }
