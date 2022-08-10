@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/marcelosj3/project-csgo-dashboard-rank/compare/v1.4.1...v1.4.2) (2022-08-10)
+
+
+### Bug Fixes
+
+* change message error keys to error ([391c45d](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/391c45df9c5df4f55764f9be6a44db106e88519a))
+
 ### [1.4.1](https://github.com/marcelosj3/csgodashboardrank/compare/v1.4.0...v1.4.1) (2022-08-06)
 
 
