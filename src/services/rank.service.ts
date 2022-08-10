@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-import { IKillsRank } from "../interfaces";
+import { IADRRank, IKillsRank } from "../interfaces";
 import { PlayerMatchRepository } from "../repositories";
 
 class RankService {
@@ -32,6 +32,36 @@ class RankService {
       });
 
     return { status: 200, message: playerByKills };
+  };
+
+  getADR = async ({ query }: Request) => {
+    const includeMatchUrl = query.hasOwnProperty("match_url");
+
+    let playerMatches;
+
+    if (includeMatchUrl) {
+      playerMatches = await PlayerMatchRepository.findAllWithMatchUrl();
+    } else {
+      playerMatches = await PlayerMatchRepository.findAll();
+    }
+
+    const playerByADR = playerMatches
+      .map((playerMatch): IADRRank => {
+        return {
+          name: playerMatch.player.name,
+          adr: playerMatch.averageDamagePerRound,
+          matchUrl: includeMatchUrl
+            ? playerMatch.matches[0].matchUrl
+            : undefined,
+        };
+      })
+      .sort((playerA, playerB) => {
+        if (playerA.adr > playerB.adr) return -1;
+        if (playerA.adr < playerB.adr) return 1;
+        return 0;
+      });
+
+    return { status: 200, message: playerByADR };
   };
 }
 
