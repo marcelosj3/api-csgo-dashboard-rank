@@ -1,7 +1,7 @@
 # API Advisor
 
 ```json
-"baseURL": "https://csgo-dashboard-rank.herokuapp.com"
+"baseURL": "https://api-csgo-dashboard-rank.herokuapp.com/"
 ```
 ---
 ## Summary
