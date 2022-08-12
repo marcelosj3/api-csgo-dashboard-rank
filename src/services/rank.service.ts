@@ -1,58 +1,42 @@
 import { Request } from "express";
 import { PlayerMatch } from "../entities";
+import { ParsedQs } from "qs";
 
-import { IRanksKills, IPlayerMatchSerializer } from "../interfaces";
+import { IRanksKills } from "../interfaces";
 import { PlayerMatchRepository } from "../repositories";
-import { playerMatchSerializer } from "../serializers";
 
-type IMapCallback<T> = (player: IPlayerMatchSerializer) => T;
+type IMapCallback<T> = (playerMatch: PlayerMatch) => T;
 type TOrderBy<T> = { [P in keyof T]: "ASC" | "DESC" | undefined };
 
 class RankService {
-  getRankInfo = async <T, S>(
-    mapCallback: (player: PlayerMatch) => T,
+  queryParams = ["match_url"];
+
+  getRankInfo = async <T>(
+    mapCallback: IMapCallback<T>,
     order: TOrderBy<T>
+    // query: ParsedQs
   ) => {
-    const playerMatches: PlayerMatch[] =
-      await PlayerMatchRepository.findAllRank();
+    const playerMatches: PlayerMatch[] = await PlayerMatchRepository.findAll();
 
-    console.log("-".repeat(50));
-    console.log();
-    console.log(playerMatches);
-    console.log();
-    console.log("-".repeat(50));
+    const rankInfo = playerMatches.map(mapCallback);
 
-    // playerMatches.map(mapCallback).sort((playerA, playerB) => {
-    //   const sorts = Object.entries(order);
-
-    //   const [key, value] = sorts[0];
-    //   const sortValue = value === "ASC" ? 1 : value === "DESC" ? -1 : 0;
-
-    //   const pA = playerA[key as keyof T];
-    //   const pB = playerB[key as keyof T];
-
-    //   if (pA > pB) return sortValue;
-    //   if (pA < pB) return sortValue;
-
-    //   return 0;
-    // });
-
-    return playerMatches;
+    return rankInfo;
   };
 
   getKills = async ({ query }: Request) => {
     const includeMatchUrl = query.hasOwnProperty("match_url");
 
-    const order: TOrderBy<IRanksKills> = { kills: "DESC", player: undefined };
+    const order: TOrderBy<IRanksKills> = { kills: "DESC", name: undefined };
 
-    const playersInfo: IMapCallback<IRanksKills> = (player) => ({
-      name: player.player,
-      kills: player.kills,
+    const playersInfo: IMapCallback<IRanksKills> = (playerMatch) => ({
+      name: playerMatch.player.name,
+      kills: playerMatch.kills,
     });
 
     const playerByKills = await this.getRankInfo<IRanksKills>(
       playersInfo,
       order
+      // query
     );
 
     return { status: 200, message: playerByKills };

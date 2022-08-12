@@ -3,7 +3,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Platform } from "./platform.entity";
 import { Player } from "./player.entity";
 
-@Entity("platformCredentials")
+@Entity("platform_credentials")
 export class PlatformCredentials {
   @PrimaryGeneratedColumn("uuid")
   readonly platformCredentialsId?: string;

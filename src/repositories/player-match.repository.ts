@@ -12,10 +12,8 @@ class PlayerMatchRepository {
 
   create = (PlayerMatch: PlayerMatch) => this.repo.create(PlayerMatch);
 
-  findAllRank = () =>
-    this.repo.find({
-      relations: ["player", "match"],
-    });
+  findAll = () =>
+    this.repo.find({ relations: ["player", "match", "multikill"] });
 
   save = async (PlayerMatch: PlayerMatch) => await this.repo.save(PlayerMatch);
 }
