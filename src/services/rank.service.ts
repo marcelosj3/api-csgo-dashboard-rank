@@ -1,35 +1,59 @@
 import { Request } from "express";
+import { PlayerMatch } from "../entities";
 
-import { IKillsRank } from "../interfaces";
+import { IRanksKills, IPlayerMatchSerializer } from "../interfaces";
 import { PlayerMatchRepository } from "../repositories";
+import { playerMatchSerializer } from "../serializers";
+
+type IMapCallback<T> = (player: IPlayerMatchSerializer) => T;
+type TOrderBy<T> = { [P in keyof T]: "ASC" | "DESC" | undefined };
 
 class RankService {
+  getRankInfo = async <T, S>(
+    mapCallback: (player: PlayerMatch) => T,
+    order: TOrderBy<T>
+  ) => {
+    const playerMatches: PlayerMatch[] =
+      await PlayerMatchRepository.findAllRank();
+
+    console.log("-".repeat(50));
+    console.log();
+    console.log(playerMatches);
+    console.log();
+    console.log("-".repeat(50));
+
+    // playerMatches.map(mapCallback).sort((playerA, playerB) => {
+    //   const sorts = Object.entries(order);
+
+    //   const [key, value] = sorts[0];
+    //   const sortValue = value === "ASC" ? 1 : value === "DESC" ? -1 : 0;
+
+    //   const pA = playerA[key as keyof T];
+    //   const pB = playerB[key as keyof T];
+
+    //   if (pA > pB) return sortValue;
+    //   if (pA < pB) return sortValue;
+
+    //   return 0;
+    // });
+
+    return playerMatches;
+  };
+
   getKills = async ({ query }: Request) => {
     const includeMatchUrl = query.hasOwnProperty("match_url");
 
-    let playerMatches;
+    const order: TOrderBy<IRanksKills> = { kills: "DESC", player: undefined };
 
-    if (includeMatchUrl) {
-      playerMatches = await PlayerMatchRepository.findAllWithMatchUrl();
-    } else {
-      playerMatches = await PlayerMatchRepository.findAll();
-    }
+    const playersInfo: IMapCallback<IRanksKills> = (player) => ({
+      name: player.player,
+      kills: player.kills,
+    });
 
-    const playerByKills = playerMatches
-      .map((playerMatch): IKillsRank => {
-        return {
-          name: playerMatch.player.name,
-          kills: playerMatch.kills,
-          matchUrl: includeMatchUrl
-            ? playerMatch.matches[0].matchUrl
-            : undefined,
-        };
-      })
-      .sort((playerA, playerB) => {
-        if (playerA.kills > playerB.kills) return -1;
-        if (playerA.kills < playerB.kills) return 1;
-        return 0;
-      });
+    const playerByKills = await this.getRankInfo<IRanksKills>(
+      playersInfo,
+      order
+    );
 
     return { status: 200, message: playerByKills };
   };

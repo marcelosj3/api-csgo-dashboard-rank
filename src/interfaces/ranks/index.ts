@@ -1,1 +1,1 @@
-export { IKillsRank } from "./kills.interface";
+export { IRanksKills } from "./kills.interface";
