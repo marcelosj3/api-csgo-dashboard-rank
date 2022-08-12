@@ -12,9 +12,7 @@ class PlayerMatchRepository {
 
   create = (PlayerMatch: PlayerMatch) => this.repo.create(PlayerMatch);
 
-  findAll = () => this.repo.find({ relations: ["player"] });
-  findAllWithMatchUrl = () =>
-    this.repo.find({ relations: ["player", "matches"] });
+  findAll = () => this.repo.find({ relations: ["player", "match"] });
 
   save = async (PlayerMatch: PlayerMatch) => await this.repo.save(PlayerMatch);
 }
