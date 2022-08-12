@@ -7,22 +7,14 @@ class RankService {
   getKills = async ({ query }: Request) => {
     const includeMatchUrl = query.hasOwnProperty("match_url");
 
-    let playerMatches;
-
-    if (includeMatchUrl) {
-      playerMatches = await PlayerMatchRepository.findAllWithMatchUrl();
-    } else {
-      playerMatches = await PlayerMatchRepository.findAll();
-    }
+    const playerMatches = await PlayerMatchRepository.findAll();
 
     const playerByKills = playerMatches
       .map((playerMatch): IKillsRank => {
         return {
           name: playerMatch.player.name,
           kills: playerMatch.kills,
-          matchUrl: includeMatchUrl
-            ? playerMatch.matches[0].matchUrl
-            : undefined,
+          matchUrl: includeMatchUrl ? playerMatch.match.matchUrl : undefined,
         };
       })
       .sort((playerA, playerB) => {
