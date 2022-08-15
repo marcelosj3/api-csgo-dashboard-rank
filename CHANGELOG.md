@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/marcelosj3/project-csgo-dashboard-rank/compare/v1.5.0...v1.5.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* add more classes to specific get the scoreboard values ([6e8108b](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/6e8108b791a0c60fc3e888e908f8706f8cfdb1ee))
+
 ## [1.5.0](https://github.com/marcelosj3/project-csgo-dashboard-rank/compare/v1.4.2...v1.5.0) (2022-08-15)
 
 
