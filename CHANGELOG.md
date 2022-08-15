@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/marcelosj3/project-csgo-dashboard-rank/compare/v1.4.2...v1.5.0) (2022-08-15)
+
+
+### Features
+
+* create handlers to each query function ([f9ae083](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/f9ae08385d278ca33d589058f02e482b928d0f6d))
+* dynamic sort function ([5508eb4](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/5508eb4e4cfc4a367d4d382698ef6d5e70e368c1))
+* query handler, rank info and rank sorter functions ([1046acb](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/1046acb45cca89b285225c2869ad1ddcf9e69d84))
+* remove duplicates and minimize code ([1520e3d](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/1520e3dbea1ef943d95ea69b49d3fe5949803953))
+* WIP common functions ([6d3a137](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/6d3a1379a0acea9ef3f0d760ab780e7e6fa76409))
+
+
+### Bug Fixes
+
+* resolve conflicts, merge branches and organize rank info getter ([5a7cd70](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/5a7cd708f5e415fffc25aa8d0325e72656b25b7c))
+* tables name, new migrations and match relationship with player matches ([59c9b79](https://github.com/marcelosj3/project-csgo-dashboard-rank/commit/59c9b79d9f020ba4444f176e2e3c613b0250993a))
+
 ### [1.4.2](https://github.com/marcelosj3/project-csgo-dashboard-rank/compare/v1.4.1...v1.4.2) (2022-08-10)
 
 
