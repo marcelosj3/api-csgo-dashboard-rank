@@ -1,48 +1,43 @@
 import { ParsedQs } from "qs";
 
 import { QueryParam } from "../../enums";
+import { IQueryParamsValues } from "../../interfaces";
 import { TSortBy } from "../../types";
+import { queryFunctionHandler } from "./query-functions";
 
-export const queryHandler = <T extends { matchUrl?: string }>(
+const queryValues = <T>(
   rankInfo: T[],
   queryParamsList: QueryParam[],
-  query: ParsedQs,
-  sort: TSortBy<T>
-) => {
-  const queryParams = queryParamsList
+  query: ParsedQs
+): IQueryParamsValues => {
+  return queryParamsList
     .map((queryParam) => ({
       [queryParam]:
-        query[queryParam] && query[queryParam] !== ""
+        query[queryParam] &&
+        query[queryParam] !== "" &&
+        Object.keys(rankInfo[0])
+          .map((key) => key.toLowerCase())
+          .includes((query[queryParam] as string).toLowerCase())
           ? query[queryParam]
           : query[queryParam] == ""
           ? true
           : false,
     }))
-    .reduce((acc, value) => Object.assign(acc, value), {});
+    .reduce(
+      (acc, value) => Object.assign(acc, value),
+      {}
+    ) as IQueryParamsValues;
+};
 
-  const matchUrl = queryParams[QueryParam.MATCH_URL];
-  const sortBy = rankInfo[0]
-    ? Object.keys(rankInfo[0]).includes(
-        queryParams[QueryParam.SORT_BY] as string
-      )
-      ? queryParams[QueryParam.SORT_BY]
-      : false
-    : false;
-  const reversed = queryParams[QueryParam.REVERSED];
+export const queryHandler = <T>(
+  rankInfo: T[],
+  queryParamsList: QueryParam[],
+  query: ParsedQs,
+  sort: TSortBy<T>
+): IQueryParamsValues => {
+  const queryParams = queryValues(rankInfo, queryParamsList, query);
 
-  if (!matchUrl) {
-    rankInfo.forEach((player: T) => {
-      delete player.matchUrl;
-    });
-  }
+  queryFunctionHandler<T>(queryParams, rankInfo, sort);
 
-  if (sortBy) {
-    const querySort = {
-      [sortBy as string]: "ASC",
-    };
-
-    Object.assign(sort, querySort);
-  }
-
-  return !!reversed;
+  return queryParams;
 };

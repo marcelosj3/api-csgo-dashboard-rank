@@ -18,8 +18,8 @@ export const rankInfo = async <T>(
   const playerMatches: PlayerMatch[] = await PlayerMatchRepository.findAll();
 
   const rankInfo = playerMatches.map(mapCallback);
-  const reversedSort = queryHandler<T>(rankInfo, queryParamsList, query, sort);
-  sortRank<T>(rankInfo, reversedSort, sort);
+  const queryParams = queryHandler<T>(rankInfo, queryParamsList, query, sort);
+  sortRank<T>(rankInfo, queryParams, sort);
 
   return rankInfo;
 };

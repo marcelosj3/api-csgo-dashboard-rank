@@ -1,9 +1,10 @@
-import { ISortValue } from "../../interfaces";
+import { QueryParam } from "../../enums";
+import { IQueryParamsValues, ISortValue } from "../../interfaces";
 import { TSortBy } from "../../types";
 
 export const sortRank = <T>(
   rankInfo: T[],
-  reversed: boolean,
+  queryParams: IQueryParamsValues,
   sort?: Partial<TSortBy<T>>
 ) => {
   const defaultSort: ISortValue = rankInfo
@@ -41,7 +42,7 @@ export const sortRank = <T>(
       let sort = value === "ASC" ? 1 : value === "DESC" ? -1 : 0;
       let invertedSort = value === "DESC" ? 1 : value === "ASC" ? -1 : 0;
 
-      if (i === 0 && reversed) {
+      if (i === 0 && queryParams[QueryParam.REVERSED]) {
         sort = value === "DESC" ? 1 : value === "ASC" ? -1 : 0;
         invertedSort = value === "ASC" ? 1 : value === "DESC" ? -1 : 0;
       }
