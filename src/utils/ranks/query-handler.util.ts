@@ -31,12 +31,12 @@ const queryValues = <T>(
 
 export const queryHandler = <T>(
   rankInfo: T[],
-  queryParamsList: QueryParam[],
   query: ParsedQs,
   sort: TSortBy<T>
 ): IQueryParamsValues => {
-  const queryParams = queryValues(rankInfo, queryParamsList, query);
+  const queryParamsList: QueryParam[] = [...Object.values(QueryParam)];
 
+  const queryParams = queryValues(rankInfo, queryParamsList, query);
   queryFunctionHandler<T>(queryParams, rankInfo, sort);
 
   return queryParams;
