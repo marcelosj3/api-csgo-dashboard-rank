@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-import { IRanksKills } from "../interfaces";
+import { IRanksDeaths, IRanksKills } from "../interfaces";
 import { rankInfo } from "../utils";
 
 class RankService {
@@ -13,8 +13,18 @@ class RankService {
       }),
       query
     );
-
     return { status: 200, message: playerByKills };
+  };
+  getDeaths = async ({ query }: Request) => {
+    const playerByDeaths = await rankInfo<IRanksDeaths>(
+      (playerMatch) => ({
+        name: playerMatch.player.name,
+        deaths: playerMatch.deaths,
+        matchUrl: playerMatch.match.matchUrl,
+      }),
+      query
+    );
+    return { status: 200, message: playerByDeaths };
   };
 }
 
