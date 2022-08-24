@@ -12,6 +12,7 @@ export { IMatchDetails, IMatchPlayerInfo, IScoreboard } from "./matches";
 export { IPlayer } from "./players";
 
 export {
+  IRanksDeaths,
   IRanksKills,
   IQueryParamsValues,
   IRankInfoCallback,

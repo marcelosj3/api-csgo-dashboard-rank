@@ -1,10 +1,10 @@
 import { PlayerMatch } from "../../entities";
-import { IRanksKills } from "../../interfaces";
+import { IRanksDeaths } from "../../interfaces";
 
-export const ranksKillsSerializer = (
+export const ranksDeathsSerializer = (
   playerMatch: PlayerMatch
-): IRanksKills => ({
+): IRanksDeaths => ({
   name: playerMatch.player.name,
-  kills: playerMatch.kills,
+  deaths: playerMatch.deaths,
   matchUrl: playerMatch.match.matchUrl,
 });
