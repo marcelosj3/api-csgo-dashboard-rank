@@ -1,7 +1,7 @@
 # API Advisor
 
 ```json
-"baseURL": "https://csgo-dashboard-rank.herokuapp.com"
+"baseURL": "https://api-csgo-dashboard-rank.herokuapp.com/"
 ```
 ---
 ## Summary
@@ -284,7 +284,7 @@ HTTP: 409 - CONFLICT
   "status": "error",
   "code": 409,
   "message": {
-    "match": "A match with that id was already registered."
+    "error": "A match with that id was already registered."
   }
 }
 ```

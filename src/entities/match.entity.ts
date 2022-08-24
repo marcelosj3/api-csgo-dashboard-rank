@@ -2,8 +2,8 @@ import {
   Column,
   Entity,
   JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 
@@ -38,7 +38,7 @@ export class Match {
   })
   platform: Platform;
 
-  @ManyToMany(() => PlayerMatch, (playerMatch) => playerMatch.matches, {
+  @OneToMany(() => PlayerMatch, (playerMatch) => playerMatch.match, {
     onDelete: "CASCADE",
   })
   @JoinTable()

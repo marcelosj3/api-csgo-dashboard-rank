@@ -21,11 +21,13 @@ export class CSGOStatsMatchInfo extends CSGOStatsMatchPlayerInfo {
     const mapName = details.find(MAP_NAME_PATH).text();
     const matchDate = this.dateHandler(details.find(DATE_PATH).text());
     const platformId = this.matchId(url);
+
+    const teamValuesClasses = "> .team-score-inner > .team-score-number";
     const team1Rounds = Number(
-      details.find(".team-0-score > div > span").text()
+      details.find(`.team-0-score ${teamValuesClasses}`).text()
     );
     const team2Rounds = Number(
-      details.find(".team-1-score > div > span").text()
+      details.find(`.team-1-score ${teamValuesClasses}`).text()
     );
 
     return {

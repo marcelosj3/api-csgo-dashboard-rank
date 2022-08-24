@@ -12,7 +12,7 @@ import { Match } from "./match.entity";
 import { Multikill } from "./multikill.entity";
 import { Player } from "./player.entity";
 
-@Entity("playersMatches")
+@Entity("player_matches")
 export class PlayerMatch {
   @PrimaryGeneratedColumn("uuid")
   readonly playerMatchId?: string;
@@ -72,6 +72,6 @@ export class PlayerMatch {
   })
   player: Player;
 
-  @ManyToMany(() => Match, (match) => match.playerMatches)
-  matches: Match[];
+  @ManyToOne(() => Match, (match) => match.playerMatches)
+  match: Match;
 }
