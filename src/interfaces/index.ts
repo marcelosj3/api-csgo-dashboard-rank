@@ -13,6 +13,7 @@ export { IPlayer } from "./players";
 
 
 export {
+  IRanksDeaths,
   IRanksADRs,
   IRanksKills,
   IQueryParamsValues,

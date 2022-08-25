@@ -1,6 +1,7 @@
 import { Request } from "express";
 
-import { IRanksADRs, IRanksKills } from "../interfaces";
+
+import { IRanksADRs, IRanksDeaths, IRanksKills } from "../interfaces";
 import { rankInfo } from "../utils";
 
 
@@ -14,9 +15,19 @@ class RankService {
       }),
       query
     );
-
     return { status: 200, message: playerByKills };
   };
+
+  getDeaths = async ({ query }: Request) => {
+    const playerByDeaths = await rankInfo<IRanksDeaths>(
+      (playerMatch) => ({
+        name: playerMatch.player.name,
+        deaths: playerMatch.deaths,
+      }),
+      query
+    );
+    return { status: 200, message: playerByDeaths };
+  );
 
   getADR = async ({ query }: Request) => {
     const playerByADRs = await rankInfo<IRanksADRs>(
@@ -27,7 +38,6 @@ class RankService {
       }),
       query
     );
-
     return { status: 200, message: playerByADRs };
   };
 }
