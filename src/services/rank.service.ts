@@ -1,7 +1,8 @@
 import { Request } from "express";
 
-import { IRanksKills } from "../interfaces";
+import { IRanksADRs, IRanksKills } from "../interfaces";
 import { rankInfo } from "../utils";
+
 
 class RankService {
   getKills = async ({ query }: Request) => {
@@ -15,6 +16,19 @@ class RankService {
     );
 
     return { status: 200, message: playerByKills };
+  };
+
+  getADR = async ({ query }: Request) => {
+    const playerByADRs = await rankInfo<IRanksADRs>(
+      (playerMatch) => ({
+        name: playerMatch.player.name,
+        adr: playerMatch.averageDamagePerRound,
+        matchUrl: playerMatch.match.matchUrl,
+      }),
+      query
+    );
+
+    return { status: 200, message: playerByADRs };
   };
 }
 

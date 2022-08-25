@@ -5,6 +5,7 @@ const router: Router = Router();
 
 export const rankRoutes = (): Router => {
   router.get("/kills", RankControllers.getKills);
+  router.get("/adr", RankControllers.getADR);
 
   return router;
 };

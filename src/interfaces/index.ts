@@ -11,12 +11,15 @@ export { IMatchDetails, IMatchPlayerInfo, IScoreboard } from "./matches";
 
 export { IPlayer } from "./players";
 
+
 export {
+  IRanksADRs,
   IRanksKills,
   IQueryParamsValues,
   IRankInfoCallback,
   ISortValue,
 } from "./ranks";
+
 
 export {
   IMatchSerializer,
@@ -25,3 +28,4 @@ export {
   IScoreboardSerializer,
   IPlayerSerializer,
 } from "./serializers";
+
