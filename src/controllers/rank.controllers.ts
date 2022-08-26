@@ -16,6 +16,13 @@ class RankController {
     const { status, message } = await RankService.getADR(req);
     return res.status(status).json(message);
   };
+
+  getAssists = async (req: Request, res: Response) => {
+    const { status, message } = await RankService.getAssists(req);
+    return res.status(status).json(message);
+  };
+
+  
 }
 
 export default new RankController();
