@@ -27,7 +27,7 @@ class RankService {
       query
     );
     return { status: 200, message: playerByDeaths };
-  );
+  };
 
   getADR = async ({ query }: Request) => {
     const playerByADRs = await rankInfo<IRanksADRs>(
