@@ -11,7 +11,8 @@
     "migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/data-source.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "release": "standard-version"
+    "release": "standard-version",
+    "test": "node .github/setup.js"
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.12",
