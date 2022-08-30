@@ -13,8 +13,9 @@ export { IPlayer } from "./players";
 
 
 export {
-  IRanksDeaths,
   IRanksADRs,
+  IRanksAssists,
+  IRanksDeaths,
   IRanksKills,
   IQueryParamsValues,
   IRankInfoCallback,
