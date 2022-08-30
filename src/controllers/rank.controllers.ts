@@ -22,7 +22,6 @@ class RankController {
     return res.status(status).json(message);
   };
 
-  
 }
 
 export default new RankController();
