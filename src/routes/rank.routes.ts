@@ -6,8 +6,11 @@ const router: Router = Router();
 export const rankRoutes = (): Router => {
   router.get("/kills", RankControllers.getKills);
   router.get("/deaths", RankControllers.getDeaths);
-  router.get("/adr", RankControllers.getADR);
+  router.get("/adrs", RankControllers.getADRs);
   router.get("/assists", RankControllers.getAssists);
+  router.get("/hss", RankControllers.getHSs);
+  router.get("/kdds", RankControllers.getKDDs);
+  router.get("/kdrs", RankControllers.getKDRs);
 
 
   return router;
